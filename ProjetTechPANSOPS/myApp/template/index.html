@@ -1,0 +1,79 @@
+<h2>Liste des agents</h2>
+<table>
+    <thead>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Date de naissance</th>
+        <th>Téléphone</th>
+        <th>Fin de formation théorique</th>
+    </thead>
+    <tbody>
+        {%for agent in listeAgents%}
+        <tr>
+            <td>{{agent.nom_agent}}</td>
+            <td>{{agent.prenom_agent}}</td>
+            <td>{{agent.date_naissance_agent}}</td>
+            <td>{{agent.tel_agent}}</td>
+            <td>{{agent.fin_formation_theorique_agent}}</td>
+        </tr>
+        {%endfor%}
+    </tbody>
+</table>
+
+<h2>Ajout d'un agent à la base de données</h2>
+<form method="POST" action="/add_agent">
+    <div>
+        <div>
+            <div>
+                <label>Prénom</label>
+            </div>
+            <div>
+                <input type="text" id="prenom" name="prenom"
+                    placeholder="Prénom">
+            </div>
+            <div>
+                <label>Nom</label>
+            </div>
+            <div>
+                <input type="text" id="nom" name="nom"
+                    placeholder="Nom">
+            </div>
+            <div>
+                <label>Date de naissance</label>
+            </div>
+            <div>
+                <input type="date" id="date_naissance" name="date_naissance">
+            </div>
+            <div>
+                <label>Date de fin de formation théorique</label>
+            </div>
+            <div>
+                <input type="date" id="date_fin_formation" name="date_fin_formation">
+            </div>
+            <label>Numéro de téléphone</label>
+        </div>
+        <div>
+            <input type="text" id="tel" name="tel"
+                placeholder="Numéro de téléphone">
+        </div>
+        <p></p>
+            <div>
+                <button type="submit">Ajouter un agent</button>
+                <button type="reset">Réinitialiser</button>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+<h2>Ajout d'une compétence</h2>
+
+<form method="POST" action="add_competence">
+<div>
+    <select name="id_agent" required>
+        {%for agent in listeAgents%}
+        <option value="{{agent.id_agents}}">{{agent.nom_agent}} {{agent.prenom_agent}}</option>
+        {%endfor%}
+    </select>
+</div>
+</form>
