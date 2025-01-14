@@ -1,5 +1,4 @@
 <h2>Liste des agents</h2>
-test
 <table>
     <thead>
         <th>Nom</th>
@@ -67,14 +66,40 @@ test
     </div>
 </form>
 
-<h2>Ajout d'une compétence</h2>
+<h2>Liste des actions de maintien et actualisation de compétences, conformément à la réglementation</h2>
+{%for action in listeMAC%}
+<p>{{action.titre_maintien_competences}}</p>
+{%endfor%}
 
-<form method="POST" action="add_competence">
+<h2>Ajout d'une formation "Maintien et actualisation des compétences"</h2>
+
+<form method="POST" action="/add_formation_MAC">
+<div>
+    <label>Agent concerné</label>
+</div>
 <div>
     <select name="id_agent" required>
         {%for agent in listeAgents%}
         <option value="{{agent.id_agents}}">{{agent.nom_agent}} {{agent.prenom_agent}}</option>
         {%endfor%}
     </select>
+</div>
+<div>
+    <label>Formation concernée</label>
+</div>
+<div>
+    <select name="id_maintien_competences" required>
+        {%for action in listeMAC%}
+        <option value="{{action.id_maintien_competences}}">{{action.titre_maintien_competences}}</option>
+        {%endfor%}
+    </select>
+</div>
+<label>Date de fin de l'action</label>
+<div>
+    <input type="date" name="date_participation_agent">
+</div>
+<div>
+    <button type="submit">Ajouter un agent</button>
+    <button type="reset">Réinitialiser</button>
 </div>
 </form>

@@ -12,12 +12,23 @@ app.config.from_object('myApp.config')
 @app.route("/")
 def index():
     listeAgents=bdd.get_data()
-    params={'listeAgents':listeAgents}
+    listeMAC=bdd.get_actionsMAC_data()
+    params={'listeAgents':listeAgents,'listeMAC':listeMAC}
     params=f.messageInfo(params)
+    
     return render_template('index.html', **params)
 
+@app.route("/add_formation_MAC",methods=['POST'])
+def add_formation_MAC():
+    id_agent=request.form['id_agent']
+    id_maintien_competences=request.form['id_maintien_competences']
+    date_participation_agent=request.form['date_participation_agent']
+    bdd.add_formation_MAC(id_agent,id_maintien_competences,date_participation_agent)
+    return redirect('/')
+    
+
 @app.route('/add_agent',methods=['POST'])
-def ajoutanomalie():
+def ajoutagent():
     nom=request.form['nom']
     prenom=request.form['prenom']
     date_naissance=request.form['date_naissance']
