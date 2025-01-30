@@ -17,10 +17,10 @@ def get_data():
 
 
 
-"""def get_dateFC():
+def get_dateFC():
     cnx=bddGen.connexion()
     if cnx is None: return None
-    sql='SELECT * FROM agents LEFT JOIN participation_agent ON agents.id_agents = participation_agent.id_maintien_competencesWHERE id_maintien_competences=6'
+    sql='SELECT agents.id_agents,id_maintien_competences,date_participation_agent FROM agents LEFT JOIN participation_agent ON agents.id_agents = participation_agent.id_agent AND id_maintien_competences=6'
     param=None
     msg={
         "success":"OKdateFC",
@@ -30,7 +30,7 @@ def get_data():
     cnx.close()
     print(dateFC)
     return dateFC
-"""
+
 
 def get_actionsMAC_data():
     cnx=bddGen.connexion()

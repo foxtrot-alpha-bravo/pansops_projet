@@ -13,7 +13,9 @@ app.config.from_object('myApp.config')
 def index():
     listeAgents=bdd.get_data()
     listeMAC=bdd.get_actionsMAC_data()
+    
     params={'listeAgents':listeAgents,'listeMAC':listeMAC}
+    
     params=f.messageInfo(params)
     
     return render_template('index.html', **params)
