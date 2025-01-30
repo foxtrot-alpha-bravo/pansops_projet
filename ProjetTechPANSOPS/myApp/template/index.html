@@ -7,6 +7,7 @@
         <th>Téléphone</th>
         <th>Fin de formation théorique</th>
         <th>Statut de l'agent</th>
+        <th>Date fin formation continue</th>
     </thead>
     <tbody>
         {%for agent in listeAgents%}
@@ -17,7 +18,7 @@
             <td>{{agent.tel_agent}}</td>
             <td>{{agent.fin_formation_theorique_agent}}</td>
             <td>{{agent.statut_agent}}</td>
-            <td>{%for fc in dateFC%}{{fc.date_participation_agent}}{%endfor%}</td>
+            <td>{{agent.date_participation_agent}}</td>
         </tr>
         {%endfor%}
     </tbody>

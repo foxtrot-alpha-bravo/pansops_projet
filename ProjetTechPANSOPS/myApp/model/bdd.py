@@ -3,7 +3,7 @@ from . import bddGen
 def get_data():
     cnx=bddGen.connexion()
     if cnx is None: return None
-    sql='SELECT * from agents'
+    sql='SELECT * FROM agents LEFT JOIN participation_agent ON agents.id_agents = participation_agent.id_maintien_competences AND id_maintien_competences=6'
     param=None
     msg={
         "success":"OKagents",
@@ -16,7 +16,7 @@ def get_data():
 """def get_dateFC():
     cnx=bddGen.connexion()
     if cnx is None: return None
-    sql='SELECT * from participation_agent WHERE id_maintien_competences=6'
+    sql='SELECT * FROM agents LEFT JOIN participation_agent ON agents.id_agents = participation_agent.id_maintien_competencesWHERE id_maintien_competences=6'
     param=None
     msg={
         "success":"OKdateFC",
