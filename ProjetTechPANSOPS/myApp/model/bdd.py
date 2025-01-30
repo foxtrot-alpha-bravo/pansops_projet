@@ -3,7 +3,7 @@ from . import bddGen
 def get_data():
     cnx=bddGen.connexion()
     if cnx is None: return None
-    sql='SELECT * FROM agents LEFT JOIN participation_agent ON agents.id_agents = participation_agent.id_maintien_competences AND id_maintien_competences=6'
+    sql='SELECT * FROM agents'
     param=None
     msg={
         "success":"OKagents",
@@ -12,6 +12,8 @@ def get_data():
     listeAgents=bddGen.selectData(cnx,sql,param,msg)
     cnx.close()
     return listeAgents
+
+
 
 """def get_dateFC():
     cnx=bddGen.connexion()

@@ -6,3 +6,6 @@ SELECT agents.nom_agent, agents.prenom_agent,date_participation_agent FROM agent
 
 
 SELECT * FROM agents LEFT JOIN participation_agent ON agents.id_agents = participation_agent.id_maintien_competences AND id_maintien_competences=6
+
+
+SELECT DISTINCT agents.*, participation_agent.date_participation_agent FROM agents LEFT JOIN participation_agent ON agents.id_agents = participation_agent.id_agents AND participation_agent.id_maintien_competences = 6;
