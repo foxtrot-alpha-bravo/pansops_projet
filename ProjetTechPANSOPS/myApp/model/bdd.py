@@ -41,6 +41,8 @@ def get_actionsMAC_data():
     cnx.close()
     return listeMAC
 
+
+
 def add_agent(nom,prenom,date_naissance,tel,date_fin_formation):
     cnx = bddGen.connexion()
     if cnx is None: return None

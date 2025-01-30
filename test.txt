@@ -1,1 +1,5 @@
 est ce que tu m'entends eh oh ?
+SELECT agents.nom_agent, agents.prenom_agent,date_participation_agent
+FROM agents
+LEFT JOIN participation_agent ON agents.id_agents = participation_agent.id_maintien_competences
+WHERE id_maintien_competences=6
