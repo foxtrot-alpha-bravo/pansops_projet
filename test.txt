@@ -1,16 +1,7 @@
 SELECT agents.nom_agent, agents.prenom_agent,date_participation_agent FROM agents LEFT JOIN participation_agent ON agents.id_agents = participation_agent.id_maintien_competencesWHERE id_maintien_competences=6
 
 
-SELECT agents.*, 
-       COALESCE(latest_training.date_participation_agent, 'Pas de formation') AS derniere_formation
-FROM agents
-LEFT JOIN (
-    SELECT id_agent, MAX(date_participation_agent) AS date_participation_agent
-    FROM participation_agent
-    WHERE id_maintien_competences = 6
-    GROUP BY id_agent
-) AS latest_training 
-ON agents.id_agents = latest_training.id_agent;
+SELECT agents.*, COALESCE(latest_training.date_participation_agent, 'Pas de formation') AS derniere_formationFROM agentsLEFT JOIN (SELECT id_agent, MAX(date_participation_agent) AS date_participation_agent FROM participation_agent WHERE id_maintien_competences = 6 GROUP BY id_agent) AS latest_training ON agents.id_agents = latest_training.id_agent;
 
 
 

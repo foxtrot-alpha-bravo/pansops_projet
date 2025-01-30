@@ -7,7 +7,7 @@
         <th>Téléphone</th>
         <th>Fin de formation théorique</th>
         <th>Statut de l'agent</th>
-        <th>Date fin formation continue</th>
+        <th>Date fin dernière formation continue</th>
     </thead>
     <tbody>
         {%for agent in listeAgents%}
@@ -18,7 +18,7 @@
             <td>{{agent.tel_agent}}</td>
             <td>{{agent.fin_formation_theorique_agent}}</td>
             <td>{{agent.statut_agent}}</td>
-            <td>{{agent.date_participation_agent}}</td>
+            <td>{{agent.derniere_formation}}</td>
         </tr>
         {%endfor%}
     </tbody>
@@ -103,7 +103,7 @@
     <input type="date" name="date_participation_agent">
 </div>
 <div>
-    <button type="submit">Ajouter un agent</button>
+    <button type="submit">Ajouter une formation</button>
     <button type="reset">Réinitialiser</button>
 </div>
 </form>

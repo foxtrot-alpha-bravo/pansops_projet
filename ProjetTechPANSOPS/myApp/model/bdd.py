@@ -3,7 +3,8 @@ from . import bddGen
 def get_data():
     cnx=bddGen.connexion()
     if cnx is None: return None
-    sql='SELECT * FROM agents'
+    sql="SELECT agents.*, COALESCE(latest_training.date_participation_agent, 'None') AS derniere_formation FROM agents LEFT JOIN (SELECT id_agent, MAX(date_participation_agent) AS date_participation_agent FROM participation_agent WHERE id_maintien_competences = 6 GROUP BY id_agent) AS latest_training ON agents.id_agents = latest_training.id_agent;"
+
     param=None
     msg={
         "success":"OKagents",
@@ -11,6 +12,7 @@ def get_data():
 }
     listeAgents=bddGen.selectData(cnx,sql,param,msg)
     cnx.close()
+    print(listeAgents)
     return listeAgents
 
 
