@@ -6,6 +6,7 @@
         <th>Date de naissance</th>
         <th>Téléphone</th>
         <th>Fin de formation théorique</th>
+        <th>Statut de l'agent</th>
     </thead>
     <tbody>
         {%for agent in listeAgents%}
@@ -15,6 +16,7 @@
             <td>{{agent.date_naissance_agent}}</td>
             <td>{{agent.tel_agent}}</td>
             <td>{{agent.fin_formation_theorique_agent}}</td>
+            <td>{{agent.statut_agent}}</td>
         </tr>
         {%endfor%}
     </tbody>
