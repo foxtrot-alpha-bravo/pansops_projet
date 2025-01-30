@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, session, request
 from myApp.model import bdd
 from myApp.controller import function as f
 import random,hashlib,datetime,locale
+from dateutil.relativedelta import relativedelta
 locale.setlocale(locale.LC_ALL, "fr_FR.UTF-8")
 
 app=Flask(__name__)
@@ -36,4 +37,3 @@ def ajoutagent():
     date_fin_formation=request.form['date_fin_formation']
     bdd.add_agent(nom,prenom,date_naissance,tel,date_fin_formation)
     return redirect('/')
-
