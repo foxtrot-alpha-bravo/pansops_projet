@@ -13,18 +13,20 @@ def get_data():
     cnx.close()
     return listeAgents
 
-def get_data():
+"""def get_dateFC():
     cnx=bddGen.connexion()
     if cnx is None: return None
-    sql='SELECT * from agents'
+    sql='SELECT * from participation_agent WHERE id_maintien_competences=6'
     param=None
     msg={
-        "success":"OKagents",
-        "error" : "Failed get agents data"
+        "success":"OKdateFC",
+        "error" : "Failed get dateFC data"
 }
-    listeAgents=bddGen.selectData(cnx,sql,param,msg)
+    dateFC=bddGen.selectData(cnx,sql,param,msg)
     cnx.close()
-    return listeAgents
+    print(dateFC)
+    return dateFC
+"""
 
 def get_actionsMAC_data():
     cnx=bddGen.connexion()
