@@ -1,3 +1,4 @@
+
 <h2>Liste des agents</h2>
 <table>
     <thead>
@@ -8,6 +9,9 @@
         <th>Fin de formation théorique</th>
         <th>Statut de l'agent</th>
         <th>Date fin dernière formation continue</th>
+        <th>Jours restants</th>
+        <th>Formation continue</th>
+        <th>Maintien de compétences</th>
     </thead>
     <tbody>
         {%for agent in listeAgents%}
@@ -17,8 +21,14 @@
             <td>{{agent.date_naissance_agent}}</td>
             <td>{{agent.tel_agent}}</td>
             <td>{{agent.fin_formation_theorique_agent}}</td>
-            <td>{{agent.statut_agent}}</td>
+            <td>{{agent.statut_agent }}</td>
             <td>{{agent.derniere_formation}}</td>
+            <td>{{agent.jours_ecart}}</td>
+            <td>{{agent.couleur}}</td>
+            <td>{{agent.couleurM}}</td>
+
+
+
         </tr>
         {%endfor%}
     </tbody>
@@ -108,4 +118,5 @@
 </div>
 </form>
 
-Test
+
+

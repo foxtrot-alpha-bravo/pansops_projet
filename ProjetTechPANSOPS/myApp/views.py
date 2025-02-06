@@ -2,7 +2,8 @@ from flask import Flask, render_template, redirect, session, request
 from myApp.model import bdd
 from myApp.controller import function as f
 import random,hashlib,datetime,locale
-from dateutil.relativedelta import relativedelta
+from datetime import datetime
+"""from dateutil.relativedelta import relativedelta"""
 locale.setlocale(locale.LC_ALL, "fr_FR.UTF-8")
 
 app=Flask(__name__)
@@ -14,11 +15,46 @@ app.config.from_object('myApp.config')
 def index():
     listeAgents=bdd.get_data()
     listeMAC=bdd.get_actionsMAC_data()
-    
-    params={'listeAgents':listeAgents,'listeMAC':listeMAC}
+    listeMaint=bdd.get_dataMAINT()
+    params={'listeAgents':listeAgents,'listeMAC':listeMAC,'listeMaint':listeMaint}
     
     params=f.messageInfo(params)
-    
+    for k in range(len(listeAgents)):
+        if listeAgents[k]["derniere_formation"]=='None' :
+            listeAgents[k]['couleur'] = 'rouge'
+        else :
+            date_ajour = datetime.today().date()
+            date_form = datetime.strptime(listeAgents[k]["derniere_formation"], "%Y-%m-%d").date()
+            jours_ecart = (date_form - date_ajour).days
+            listeAgents[k]['jours_ecart'] = jours_ecart
+            if jours_ecart >= 365 :
+                listeAgents[k]['couleur'] = 'vert'
+            elif jours_ecart >= 180 :
+                listeAgents[k]['couleur'] = 'jaune'
+            elif jours_ecart >=0 :
+                listeAgents[k]['couleur'] = 'orange'
+            else :
+                listeAgents[k]['couleur'] = 'rouge'
+    for i in range(len(listeMaint)):
+        listeMaint[i]['couleurM'] = 'None'
+        if listeMaint[i]["derniere_formation_3"]=='None' :
+            listeMaint[i]['couleurM'] = 'rouge'
+        else : 
+            date_maint = datetime.strptime(listeMaint[i]["derniere_formation_3"], "%Y-%m-%d").date()
+            ecart_maint = (date_maint - date_ajour).days
+            ecart_maint=ecart_maint + 730
+            print(ecart_maint)
+            if ecart_maint >= 365 :
+                listeMaint[i]['couleurM'] = 'vert'
+            elif ecart_maint >= 180 :
+                listeMaint[i]['couleurM'] = 'jaune'
+            elif ecart_maint >=0 :
+                listeMaint[i]['couleurM'] = 'orange'
+            else :
+                listeMaint[i]['couleurM'] = 'rouge'
+        listeAgents[i]['couleurM'] = listeMaint[i]['couleurM']
+        print(listeMaint[i])
+        
     return render_template('index.html', **params)
 
 @app.route("/add_formation_MAC",methods=['POST'])
@@ -39,3 +75,4 @@ def ajoutagent():
     date_fin_formation=request.form['date_fin_formation']
     bdd.add_agent(nom,prenom,date_naissance,tel,date_fin_formation)
     return redirect('/')
+

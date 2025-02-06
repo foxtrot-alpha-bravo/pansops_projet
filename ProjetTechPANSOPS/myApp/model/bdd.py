@@ -13,9 +13,24 @@ def get_data():
     listeAgents=bddGen.selectData(cnx,sql,param,msg)
     
     cnx.close()
-    print(listeAgents)
+    
     return listeAgents
 
+def get_dataMAINT():
+    cnx=bddGen.connexion()
+    if cnx is None: return None
+    sql="WITH ranked_trainings AS ( SELECT pa.id_agent, pa.date_participation_agent, ROW_NUMBER() OVER (PARTITION BY pa.id_agent ORDER BY pa.date_participation_agent DESC) AS row_num FROM participation_agent pa WHERE pa.id_maintien_competences BETWEEN 1 AND 5 ) SELECT a.*, COALESCE(t1.date_participation_agent, 'None') AS derniere_formation_1, COALESCE(t2.date_participation_agent, 'None') AS derniere_formation_2, COALESCE(t3.date_participation_agent, 'None') AS derniere_formation_3 FROM agents a LEFT JOIN ranked_trainings t1 ON a.id_agents = t1.id_agent AND t1.row_num = 1 LEFT JOIN ranked_trainings t2 ON a.id_agents = t2.id_agent AND t2.row_num = 2 LEFT JOIN ranked_trainings t3 ON a.id_agents = t3.id_agent AND t3.row_num = 3;"
+
+    param=None
+    msg={
+        "success":"OKmaint",
+        "error" : "Failed get maint data"
+}
+    listeMaint=bddGen.selectData(cnx,sql,param,msg)
+    print(listeMaint)
+    cnx.close()
+    
+    return listeMaint
 
 
 def get_dateFC():
@@ -73,3 +88,5 @@ def add_formation_MAC(id_agent,id_maintien_competences,date_participation_agent)
     lastId = bddGen.addData(cnx, sql, param, msg)
     cnx.close()
     return lastId
+
+
