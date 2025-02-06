@@ -17,7 +17,16 @@ def index():
     params={'listeAgents':listeAgents,'listeMAC':listeMAC}
     params=f.messageInfo(params)
     
-    return render_template('index.html', **params)
+    return render_template('index2.html', **params)
+
+@app.route("/update_data")
+def update_data():
+    listeAgents=bdd.getAll_data()
+    listeMAC=bdd.get_actionsMAC_data()
+    params={'listeAgents':listeAgents,'listeMAC':listeMAC}
+    params=f.messageInfo(params)
+    
+    return render_template('update_data.html', **params)
 
 @app.route("/add_formation_MAC",methods=['POST'])
 def add_formation_MAC():
@@ -26,7 +35,16 @@ def add_formation_MAC():
     date_participation_agent=request.form['date_participation_agent']
     bdd.add_formation_MAC(id_agent,id_maintien_competences,date_participation_agent)
     return redirect('/')
+
+
+@app.route("/form_add_agent")
+def form_add_agent():
+    listeAgents=bdd.get_data()
+    listeMAC=bdd.get_actionsMAC_data()
+    params={'listeAgents':listeAgents,'listeMAC':listeMAC}
+    params=f.messageInfo(params)
     
+    return render_template('login.html', **params)
 
 @app.route('/add_agent',methods=['POST'])
 def ajoutagent():

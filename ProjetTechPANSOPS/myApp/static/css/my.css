@@ -1,0 +1,7 @@
+.glyphicon:before{
+    font-size:1.4em;
+    font-style: normal;
+    font-family: 'Font Awesome Free';
+    content: "\f007";
+    }
+    .glyphicon-ok:before {content: "\f00c";}

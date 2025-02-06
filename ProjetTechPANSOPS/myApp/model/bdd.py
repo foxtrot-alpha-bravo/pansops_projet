@@ -3,7 +3,23 @@ from . import bddGen
 def get_data():
     cnx=bddGen.connexion()
     if cnx is None: return None
-    sql="SELECT agents.*, COALESCE(DATE_ADD(latest_training.date_participation_agent, INTERVAL 2 YEAR), 'None') AS derniere_formation FROM agents LEFT JOIN (SELECT id_agent, MAX(date_participation_agent) AS date_participation_agent FROM participation_agent WHERE id_maintien_competences = 6 GROUP BY id_agent) AS latest_training ON agents.id_agents = latest_training.id_agent;"
+    sql="SELECT * from agents where statut_agent='Actif'"
+
+    param=None
+    msg={
+        "success":"OKagents",
+        "error" : "Failed get agents data"
+}
+    listeAgents=bddGen.selectData(cnx,sql,param,msg)
+    
+    cnx.close()
+    print(listeAgents)
+    return listeAgents
+
+def getAll_data():
+    cnx=bddGen.connexion()
+    if cnx is None: return None
+    sql="SELECT * from agents"
 
     param=None
     msg={
@@ -21,7 +37,7 @@ def get_data():
 """def get_dateFC():
     cnx=bddGen.connexion()
     if cnx is None: return None
-    sql='SELECT * FROM agents LEFT JOIN participation_agent ON agents.id_agents = participation_agent.id_maintien_competencesWHERE id_maintien_competences=6'
+    sql='SELECT * FROM agents LEFT JOIN participation_agent ON agents.id_agents = participation_agent.id_maintien_competences WHERE id_maintien_competences=6'
     param=None
     msg={
         "success":"OKdateFC",
