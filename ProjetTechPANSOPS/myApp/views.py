@@ -55,7 +55,35 @@ def index():
         listeAgents[i]['couleurM'] = listeMaint[i]['couleurM']
         print(listeMaint[i])
         
-    return render_template('index.html', **params)
+    return render_template('index2.html', **params)
+
+@app.route("/update_data")
+def update_data():
+    listeAgents=bdd.get_data()
+    listeMAC=bdd.get_actionsMAC_data()
+    listeMaint=bdd.get_dataMAINT()
+    params={'listeAgents':listeAgents,'listeMAC':listeMAC,'listeMaint':listeMaint}
+    params=f.messageInfo(params)
+    return render_template('update_data.html',**params)
+
+@app.route('/updateData/<champ>',methods=['POST'])
+def updateData(champ=None):
+    idAgent=request.form['pk']
+    newvalue=request.form['value']
+    if champ=='Nom':
+        bdd.update_AgentData('nom_agent',idAgent,newvalue)
+    if champ=='Prenom':
+        bdd.update_AgentData('prenom_agent',idAgent,newvalue)
+    if champ=='DateNaissance':
+        bdd.update_AgentData('date_naissance_agent',idAgent,newvalue)
+    if champ=='Tel':
+        bdd.update_AgentData('tel_agent',idAgent,newvalue)
+    if champ=='FinFormationTH':
+        bdd.update_AgentData('fin_formation_theorique_agent',idAgent,newvalue)
+    if champ=='Statut':
+        bdd.update_AgentData('statut_agent',idAgent,newvalue)
+    return "Data succesfully updated"
+
 
 @app.route("/add_formation_MAC",methods=['POST'])
 def add_formation_MAC():

@@ -12,7 +12,7 @@
     <title>Proc'ENAC</title>
     <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
     <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
-
+    <link href="/static/css/my.css" rel="stylesheet">
     <!-- Custom fonts for this template-->
     <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -54,7 +54,7 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
+                    {%include('info.html')%}
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Accueil</h1>
@@ -71,18 +71,40 @@
                                         <th>Prénom</th>
                                         <th>Date de naissance</th>
                                         <th>Téléphone</th>
-                                        <th>Fin de formation théorique</th>
+                                        <th>Validité de la formation continue</th>
+                                        <th>Validité de du maintien de compétences</th>
                                         <th>Date fin dernière formation continue</th>
+                                        <th>Date fin de formation théorique</th>
+                                        
                                     </thead>
                                     <tbody>
                                         {%for agent in listeAgents%}
                                         <tr>
                                             <td>{{agent.nom_agent}}</td>
                                             <td>{{agent.prenom_agent}}</td>
-                                            <td>{{agent.date_naissance_agent}}</td>
+                                            <td>{{agent.date_naissance_agent.strftime("%d/%m/%Y")}}</td>
                                             <td>{{agent.tel_agent}}</td>
-                                            <td>{{agent.fin_formation_theorique_agent}}</td>
+                                            {%if 'vert' in agent.couleur%}
+                                            <td class="table-green">{{agent.jours_ecart}} jours restants</td>
+                                            {%elif 'orange' in agent.couleur%}
+                                            <td class="table-orange">{{agent.jours_ecart}} jours restants</td>
+                                            {%elif 'red' in agent.couleur%}
+                                            <td class="table-red">{{agent.jours_ecart}} jours restants</td>
+                                            {%else%}
+                                            <td class="table-red">Aucune donnée</td>
+                                            {%endif%}
+                                            {%if 'vert' in agent.couleurM%}
+                                            <td class="table-green">{{agent.jours_ecart}} jours restants</td>
+                                            {%elif 'orange' in agent.couleurM%}
+                                            <td class="table-orange">{{agent.jours_ecart}} jours restants</td>
+                                            {%elif 'red' in agent.couleurM%}
+                                            <td class="table-orange">{{agent.jours_ecart}} jours restants</td>
+                                            {%else%}
+                                            <td class="table-red">Aucune donnée</td>
+                                            {%endif%}
                                             <td>{{agent.derniere_formation}}</td>
+                                            <td>{{agent.fin_formation_theorique_agent}}</td>
+
                                         </tr>
                                         {%endfor%}
                                     </tbody>

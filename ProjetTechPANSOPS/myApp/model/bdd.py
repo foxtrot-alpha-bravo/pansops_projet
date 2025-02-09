@@ -106,3 +106,14 @@ def add_formation_MAC(id_agent,id_maintien_competences,date_participation_agent)
     return lastId
 
 
+def update_AgentData(champ,idAgent,newvalue):
+    cnx=bddGen.connexion()
+    if cnx is None: return None
+    sql= 'UPDATE agents SET '+champ+' =%s WHERE id_agents =%s;'
+    param=(newvalue,idAgent)
+    msg = {
+    "success":"updateAgentDataOK",
+    "error" : "Failed update agents data"
+    }
+    bddGen.updateData(cnx,sql,param,msg)
+    cnx.close()

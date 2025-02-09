@@ -1,7 +1,22 @@
 .glyphicon:before{
     font-size:1.4em;
     font-style: normal;
-    font-family: 'Font Awesome Free';
-    content: "\f007";
+    font-family: 'Font Awesome 6 Free';
+    content: "\f00d";
     }
-    .glyphicon-ok:before {content: "\f00c";}
+    .glyphicon-ok:before {content: "\f00d";}
+
+.table-red, .table-red td{
+    background-color:#e74a3b !important;
+    color:white;
+}
+
+.table-green, .table-green td{
+    background-color:#1cc88a !important;  
+    color:white;
+}
+
+.table-orange, .table-orange td{
+    background-color:#f6c23e !important;
+    color:white;  
+}
