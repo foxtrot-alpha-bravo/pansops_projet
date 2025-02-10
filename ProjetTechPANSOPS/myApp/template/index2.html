@@ -86,6 +86,8 @@
                                             <td>{{agent.tel_agent}}</td>
                                             {%if 'vert' in agent.couleur%}
                                             <td class="table-green">{{agent.jours_ecart}} jours restants</td>
+                                            {%elif 'jaune' in agent.couleur%}
+                                            <td class="table-orange">{{agent.jours_ecart}} jours restants</td>
                                             {%elif 'orange' in agent.couleur%}
                                             <td class="table-orange">{{agent.jours_ecart}} jours restants</td>
                                             {%elif 'red' in agent.couleur%}
@@ -94,11 +96,13 @@
                                             <td class="table-red">Aucune donnée</td>
                                             {%endif%}
                                             {%if 'vert' in agent.couleurM%}
-                                            <td class="table-green">{{agent.jours_ecart}} jours restants</td>
+                                            <td class="table-green">{{agent.jours_ecartM}} jours restants</td>
+                                            {%elif 'jaune' in agent.couleurM%}
+                                            <td class="table-orange">{{agent.jours_ecartM}} jours restants</td>
                                             {%elif 'orange' in agent.couleurM%}
-                                            <td class="table-orange">{{agent.jours_ecart}} jours restants</td>
+                                            <td class="table-orange">{{agent.jours_ecartM}} jours restants</td>
                                             {%elif 'red' in agent.couleurM%}
-                                            <td class="table-orange">{{agent.jours_ecart}} jours restants</td>
+                                            <td class="table-red">{{agent.jours_ecartM}} jours restants</td>
                                             {%else%}
                                             <td class="table-red">Aucune donnée</td>
                                             {%endif%}
