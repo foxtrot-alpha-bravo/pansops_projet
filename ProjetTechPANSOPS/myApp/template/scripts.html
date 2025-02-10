@@ -30,5 +30,11 @@
                 '<i class="fa fa-times"></i>' +  // Icône annulation
             '</button>';
             $(".modif").editable()
+            $('.modifStatut').editable({
+                type:'select',
+                source:[
+                {value:'Actif',text:'Actif'},
+                {value:'Inactif',text:'Inactif'}]
+            })
         })
     </script>
