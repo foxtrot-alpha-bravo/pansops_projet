@@ -80,6 +80,7 @@
                                     <tbody>
                                         {%for agent in listeAgents%}
                                         <tr>
+                                            {%if agent.statut_agent=='Actif'%}
                                             <td>{{agent.nom_agent}}</td>
                                             <td>{{agent.prenom_agent}}</td>
                                             <td>{{agent.date_naissance_agent.strftime("%d/%m/%Y")}}</td>
@@ -108,6 +109,8 @@
                                             {%endif%}
                                             <td>{{agent.derniere_formation}}</td>
                                             <td>{{agent.fin_formation_theorique_agent}}</td>
+                                            {%endif%}
+
 
                                         </tr>
                                         {%endfor%}

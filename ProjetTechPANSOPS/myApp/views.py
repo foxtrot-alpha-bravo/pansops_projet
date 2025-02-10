@@ -43,6 +43,7 @@ def index():
             date_maint = datetime.strptime(listeMaint[i]["derniere_formation_3"], "%Y-%m-%d").date()
             ecart_maint = (date_maint - date_ajour).days
             ecart_maint=ecart_maint + 730
+            listeAgents[i]["jours_ecartM"]=ecart_maint
             print(ecart_maint)
             if ecart_maint >= 365 :
                 listeMaint[i]['couleurM'] = 'vert'
@@ -54,7 +55,7 @@ def index():
                 listeMaint[i]['couleurM'] = 'rouge'
         listeAgents[i]['couleurM'] = listeMaint[i]['couleurM']
         print(listeMaint[i])
-        
+
     return render_template('index2.html', **params)
 
 @app.route("/update_data")
