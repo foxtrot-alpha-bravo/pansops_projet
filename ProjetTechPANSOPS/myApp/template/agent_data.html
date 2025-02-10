@@ -61,60 +61,21 @@
                     </div>
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Liste des agents actifs</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Détail des formations de l'agent {%for i in name_agent%} {{i.nom_agent}} {{ i.prenom_agent }} {%endfor%}</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
-                                        <th>Nom</th>
-                                        <th>Prénom</th>
-                                        <th>Date de naissance</th>
-                                        <th>Téléphone</th>
-                                        <th>Validité de la formation continue</th>
-                                        <th>Validité de du maintien de compétences</th>
-                                        <th>Date fin dernière formation continue</th>
-                                        <th>Date fin de formation théorique</th>
-                                        <th>Voir détail des formations</th>
+                                        <th>Intitulé de la formation</th>
+                                        <th>Date de fin de formation</th>
                                         
                                     </thead>
                                     <tbody>
-                                        {%for agent in listeAgents%}
+                                        {%for formation in detail_agent%}
                                         <tr>
-                                            {%if agent.statut_agent=='Actif'%}
-                                            <td>{{agent.nom_agent}}</td>
-                                            <td>{{agent.prenom_agent}}</td>
-                                            <td>{{agent.date_naissance_agent.strftime("%d/%m/%Y")}}</td>
-                                            <td>{{agent.tel_agent}}</td>
-                                            {%if 'vert' in agent.couleur%}
-                                            <td class="table-green">{{agent.jours_ecart}} jours restants</td>
-                                            {%elif 'jaune' in agent.couleur%}
-                                            <td class="table-orange">{{agent.jours_ecart}} jours restants</td>
-                                            {%elif 'orange' in agent.couleur%}
-                                            <td class="table-orange">{{agent.jours_ecart}} jours restants</td>
-                                            {%elif 'red' in agent.couleur%}
-                                            <td class="table-red">{{agent.jours_ecart}} jours restants</td>
-                                            {%else%}
-                                            <td class="table-red">Aucune donnée</td>
-                                            {%endif%}
-                                            {%if 'vert' in agent.couleurM%}
-                                            <td class="table-green">{{agent.jours_ecartM}} jours restants</td>
-                                            {%elif 'jaune' in agent.couleurM%}
-                                            <td class="table-orange">{{agent.jours_ecartM}} jours restants</td>
-                                            {%elif 'orange' in agent.couleurM%}
-                                            <td class="table-orange">{{agent.jours_ecartM}} jours restants</td>
-                                            {%elif 'red' in agent.couleurM%}
-                                            <td class="table-red">{{agent.jours_ecartM}} jours restants</td>
-                                            {%else%}
-                                            <td class="table-red">Aucune donnée</td>
-                                            {%endif%}
-                                            <td>{{agent.derniere_formation}}</td>
-                                            <td>{{agent.fin_formation_theorique_agent}}</td>
-                                            {%endif%}
-                                            <td><a href="/detail_agent/{{agent.id_agents}}">Détail</a></td>
-
-
-                                        </tr>
+                                        <td>{{formation.titre_maintien_competences}}</td>
+                                        <td>{{formation.date_participation_agent}}</td></tr>
                                         {%endfor%}
                                     </tbody>
                                 </table>

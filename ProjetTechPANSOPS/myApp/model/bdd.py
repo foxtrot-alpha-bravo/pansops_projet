@@ -77,6 +77,38 @@ def get_actionsMAC_data():
     cnx.close()
     return listeMAC
 
+def get_actionsMAC_one_agent(idAgent):
+    cnx=bddGen.connexion()
+    if cnx is None: return None
+    sql='''SELECT * FROM participation_agent 
+    JOIN agents ON participation_agent.id_agent=agents.id_agents
+    JOIN maintien_competences on maintien_competences.id_maintien_competences=participation_agent.id_maintien_competences
+    WHERE id_agent=%s'''
+    param=(idAgent,)
+    msg={
+        "success":"OKdetail_agent",
+        "error" : "Failed get detail_agent data"
+}
+    listeMAC_one_agent=bddGen.selectData(cnx,sql,param,msg)
+    cnx.close()
+    return listeMAC_one_agent
+
+def get_name_one_agent(idAgent):
+    cnx=bddGen.connexion()
+    if cnx is None: return None
+    sql='''SELECT nom_agent, prenom_agent from agents where id_agents=%s'''
+    param=(idAgent,)
+    msg={
+        "success":"OKname_agent",
+        "error" : "Failed get name_agent data"
+}
+    name_one_agent=bddGen.selectData(cnx,sql,param,msg)
+    
+
+    cnx.close()
+    print(name_one_agent)
+    return name_one_agent
+
 
 
 def add_agent(nom,prenom,date_naissance,tel,date_fin_formation):

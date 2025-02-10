@@ -58,6 +58,14 @@ def index():
 
     return render_template('index2.html', **params)
 
+
+@app.route('/detail_agent/<id_agents>')
+def detailAgent(id_agents=''):
+    detail_agent=bdd.get_actionsMAC_one_agent(id_agents)
+    name_agent=bdd.get_name_one_agent(id_agents)
+    params={'detail_agent':detail_agent,'name_agent':name_agent}
+    return render_template('agent_data.html',**params)
+
 @app.route("/update_data")
 def update_data():
     listeAgents=bdd.get_data()
