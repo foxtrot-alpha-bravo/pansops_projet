@@ -92,9 +92,9 @@
                                             <td class="table-orange">{{agent.jours_ecart}} jours restants</td>
                                             {%elif 'orange' in agent.couleur%}
                                             <td class="table-orange">{{agent.jours_ecart}} jours restants</td>
-                                            {%elif 'red' in agent.couleur%}
+                                            {%elif 'rouge' in agent.couleur%}
                                             <td class="table-red">{{agent.jours_ecart}} jours restants</td>
-                                            {%else%}
+                                            {%elif 'red' in agent.couleur%}
                                             <td class="table-red">Aucune donnée</td>
                                             {%endif%}
                                             {%if 'vert' in agent.couleurM%}
@@ -103,15 +103,16 @@
                                             <td class="table-orange">{{agent.jours_ecartM}} jours restants</td>
                                             {%elif 'orange' in agent.couleurM%}
                                             <td class="table-orange">{{agent.jours_ecartM}} jours restants</td>
-                                            {%elif 'red' in agent.couleurM%}
+                                            {%elif 'rouge' in agent.couleurM%}
                                             <td class="table-red">{{agent.jours_ecartM}} jours restants</td>
-                                            {%else%}
+                                            {%elif 'red' in agent.couleurM%}
                                             <td class="table-red">Aucune donnée</td>
                                             {%endif%}
                                             <td>{{agent.derniere_formation}}</td>
                                             <td>{{agent.fin_formation_theorique_agent}}</td>
-                                            {%endif%}
                                             <td><a href="/detail_agent/{{agent.id_agents}}">Détail</a></td>
+                                            {%endif%}
+                                            
 
 
                                         </tr>

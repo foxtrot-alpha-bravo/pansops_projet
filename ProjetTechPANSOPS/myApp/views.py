@@ -19,14 +19,16 @@ def index():
     params={'listeAgents':listeAgents,'listeMAC':listeMAC,'listeMaint':listeMaint}
     
     params=f.messageInfo(params)
-    for k in range(len(listeAgents)):
-        if listeAgents[k]["derniere_formation"]=='None' :
-            listeAgents[k]['couleur'] = 'rouge'
+    for k in range(len(listeAgents)): #La fonction sera exécutée pour chaque agent 
+        if listeAgents[k]["derniere_formation"]=='None' : #Si l'agent n'a aucune formation enregistrée
+            listeAgents[k]['couleur'] = 'red' #La couleur revenant dans le dictionnaire est rouge, et sera affichée en conséquence
         else :
-            date_ajour = datetime.today().date()
-            date_form = datetime.strptime(listeAgents[k]["derniere_formation"], "%Y-%m-%d").date()
-            jours_ecart = (date_form - date_ajour).days
-            listeAgents[k]['jours_ecart'] = jours_ecart
+            date_ajour = datetime.today().date() #La variable est initialisée avec la date du jour
+            date_form = datetime.strptime(listeAgents[k]["derniere_formation"], "%Y-%m-%d").date() #La date présente dans le dictionnaire est appellée par cette variable
+            jours_ecart = (date_form - date_ajour).days #On recherche le nombre de jours entre la date de la dernière formation et la date du jour en faisant une soustraction entre les deux dates
+            listeAgents[k]['jours_ecart'] = jours_ecart #La variable jours_ecart correspondant aux nombres de jours est incluse au dictionnaire
+            
+            #Une couleur est renvoyée en fonction du nombre de jours, qui reflétera l'urgence de la situation de l'agent
             if jours_ecart >= 365 :
                 listeAgents[k]['couleur'] = 'vert'
             elif jours_ecart >= 180 :
@@ -38,7 +40,7 @@ def index():
     for i in range(len(listeMaint)):
         listeMaint[i]['couleurM'] = 'None'
         if listeMaint[i]["derniere_formation_3"]=='None' :
-            listeMaint[i]['couleurM'] = 'rouge'
+            listeMaint[i]['couleurM'] = 'red'
         else : 
             date_maint = datetime.strptime(listeMaint[i]["derniere_formation_3"], "%Y-%m-%d").date()
             ecart_maint = (date_maint - date_ajour).days
