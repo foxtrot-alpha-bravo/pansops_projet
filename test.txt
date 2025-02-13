@@ -22,3 +22,6 @@ case commentaire et date début dans le formulaire ds'ajout
 session 2 cas de figures soit tous les droits soit juste ajouter des actions que pour lui
 admin peut supprimer...
 dans le tableau general afficher soit date de fin soit jours restants et sur la page perso "detail" afficher l'autre
+penser au diagramme de gant(on le fait,on oublie,...)
+mardi la soutenance
+logo enac sur le site
