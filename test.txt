@@ -25,3 +25,4 @@ dans le tableau general afficher soit date de fin soit jours restants et sur la 
 penser au diagramme de gant(on le fait,on oublie,...)
 mardi la soutenance
 logo enac sur le site
+ancien tableau excel dans les annexes?
