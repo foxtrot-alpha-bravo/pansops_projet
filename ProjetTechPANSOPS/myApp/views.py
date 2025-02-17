@@ -46,7 +46,6 @@ def index():
             ecart_maint = (date_maint - date_ajour).days
             ecart_maint=ecart_maint + 730
             listeAgents[i]["jours_ecartM"]=ecart_maint
-            print(ecart_maint)
             if ecart_maint >= 365 :
                 listeMaint[i]['couleurM'] = 'vert'
             elif ecart_maint >= 180 :
