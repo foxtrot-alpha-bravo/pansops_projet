@@ -15,14 +15,15 @@ requete pour récupérer les trois derniers mmaintien de compétences
 WITH ranked_trainings AS ( SELECT pa.id_agent, pa.date_participation_agent, ROW_NUMBER() OVER (PARTITION BY pa.id_agent ORDER BY pa.date_participation_agent DESC) AS row_num FROM participation_agent pa WHERE pa.id_maintien_competences BETWEEN 1 AND 5 ) SELECT a.*, COALESCE(t1.date_participation_agent, 'None') AS derniere_formation_1, COALESCE(t2.date_participation_agent, 'None') AS derniere_formation_2, COALESCE(t3.date_participation_agent, 'None') AS derniere_formation_3 FROM agents a LEFT JOIN ranked_trainings t1 ON a.id_agents = t1.id_agent AND t1.row_num = 1 LEFT JOIN ranked_trainings t2 ON a.id_agents = t2.id_agent AND t2.row_num = 2 LEFT JOIN ranked_trainings t3 ON a.id_agents = t3.id_agent AND t3.row_num = 3;
 
 reunion du 13/02
-date debut d'ativité a l'enac
+date debut d'ativité a l'enac ->FAB
 savoir si a un instant t la personne etait actif
 pouvoir choisir date sur la page d'Accueil
 case commentaire et date début dans le formulaire ds'ajout
-session 2 cas de figures soit tous les droits soit juste ajouter des actions que pour lui
-admin peut supprimer...
-dans le tableau general afficher soit date de fin soit jours restants et sur la page perso "detail" afficher l'autre
+session 2 cas de figures soit tous les droits soit juste ajouter des actions que pour lui -> FAB
+admin peut supprimer... -> FAB
+dans le tableau general afficher soit date de fin soit jours restants et sur la page perso "detail" afficher l'autre -> FAB
 penser au diagramme de gant(on le fait,on oublie,...)
 mardi la soutenance
+logo enac sur le site ->FAB
 logo enac sur le site
 ancien tableau excel dans les annexes?

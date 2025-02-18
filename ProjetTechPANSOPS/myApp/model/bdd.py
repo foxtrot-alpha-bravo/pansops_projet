@@ -174,11 +174,11 @@ def get_name_one_agent(idAgent):
 
 
 
-def add_agent(nom,prenom,date_naissance,tel,date_fin_formation):
+def add_agent(nom,prenom,date_naissance,tel,date_fin_formation,debut_activite_enac,mdpC):
     cnx = bddGen.connexion()
     if cnx is None: return None
-    sql = "INSERT INTO `agents` (`nom_agent`, `prenom_agent`, `date_naissance_agent`, `tel_agent`, `fin_formation_theorique_agent`) VALUES (%s, %s, %s,%s,%s);"
-    param = (nom,prenom,date_naissance,tel,date_fin_formation)
+    sql = "INSERT INTO `agents` (`nom_agent`, `prenom_agent`, `date_naissance_agent`, `tel_agent`, `fin_formation_theorique_agent`,`debut_activite_enac`,motPasse) VALUES (%s, %s, %s,%s,%s,%s,%s);"
+    param = (nom,prenom,date_naissance,tel,date_fin_formation,debut_activite_enac,mdpC)
     msg = {
     "success":"addAgentOK",
     "error" : "Failed add agent data"
@@ -187,11 +187,11 @@ def add_agent(nom,prenom,date_naissance,tel,date_fin_formation):
     cnx.close()
     return lastId
 
-def add_formation_MAC(id_agent,id_maintien_competences,date_participation_agent):
+def add_formation_MAC(id_agent,id_maintien_competences,date_participation_agent,commentaires):
     cnx = bddGen.connexion()
     if cnx is None: return None
-    sql = "INSERT INTO `participation_agent` (`id_agent`,`id_maintien_competences`, `date_participation_agent`) VALUES (%s, %s, %s);"
-    param = (id_agent,id_maintien_competences,date_participation_agent)
+    sql = "INSERT INTO `participation_agent` (`id_agent`,`id_maintien_competences`, `date_participation_agent`,`commentaires`) VALUES (%s, %s, %s,%s);"
+    param = (id_agent,id_maintien_competences,date_participation_agent,commentaires)
     msg = {
     "success":"addFormationOK",
     "error" : "Failed add formations data"

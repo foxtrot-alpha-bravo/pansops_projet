@@ -99,7 +99,8 @@ def add_formation_MAC():
     id_agent=request.form['id_agent']
     id_maintien_competences=request.form['id_maintien_competences']
     date_participation_agent=request.form['date_participation_agent']
-    bdd.add_formation_MAC(id_agent,id_maintien_competences,date_participation_agent)
+    commentaires=request.form['commentaires']
+    bdd.add_formation_MAC(id_agent,id_maintien_competences,date_participation_agent,commentaires)
     return redirect('/')
 
 
@@ -119,7 +120,17 @@ def ajoutagent():
     date_naissance=request.form['date_naissance']
     tel=request.form['tel']
     date_fin_formation=request.form['date_fin_formation']
-    bdd.add_agent(nom,prenom,date_naissance,tel,date_fin_formation)
+    debut_activite_enac=request.form['debut_activite_enac']
+    s="abcdefghijklmnopqrstuvwxyz01234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()?"
+    mdp = "".join(random.sample( s , 6 )) #6 = longueur du mot de passe
+    mdpClair=mdp
+    mdp=hashlib.sha256(mdp.encode())
+    mdpC=mdp.hexdigest()
+    bdd.add_agent(nom,prenom,date_naissance,tel,date_fin_formation,debut_activite_enac,mdpC)
+    if "errorDB" not in session:
+        session["infoVert"] = "Nouveau membre inséré. Votre mot de passe est " + mdpClair
+    else:
+        session["infoRouge"] = "Problème ajout membre"
     return redirect('/')
 
 @app.route('/check_date',methods=['POST'])
