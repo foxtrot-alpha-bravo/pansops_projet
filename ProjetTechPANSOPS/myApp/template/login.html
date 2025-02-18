@@ -126,10 +126,15 @@
                                                     <select name="id_agent" class="form-control" required>
                                                         <option value="" selected disabled>Choisissez un agent...
                                                         </option>
+                                                        {%if 'Administrateur' in session["statut_admin_agent"]%}
                                                         {%for agent in listeAgents%}
                                                         <option value="{{agent.id_agents}}">{{agent.nom_agent}}
                                                             {{agent.prenom_agent}}</option>
                                                         {%endfor%}
+                                                        {%else%}
+                                                        <option value="{{session['id_agents']}}">{{session["nom_agent"]}} {{session["prenom_agent"]}}</option>
+                                                        {%endif%}
+                                                        
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
