@@ -82,6 +82,13 @@
                                                         <input class="form-control" type="text" id="tel" name="tel"
                                                             placeholder="Numéro de téléphone">
                                                     </div>
+                                                    <div class="form_group">
+                                                        <label>Date de prise de fonction à l'ENAC</label>
+                                                    </div>
+                                                    <div class="form_group">
+                                                        <input class="form-control" type="date"
+                                                            id="debut_activite_enac" name="debut_activite_enac">
+                                                    </div>
                                                     <p></p>
                                                     <div class="text-center">
                                                         <button class="btn btn-primary btn-user btn-block"
@@ -144,6 +151,49 @@
                                                     <input type="date" class="form-control"
                                                         name="date_participation_agent">
                                                 </div>
+                                                <label>Commentaires</label>
+                                                <div class="form-group">
+                                                    <textarea name="commentaires" class="form-control zonedetexte"></textarea>
+                                                </div>
+                                                <div class="text-center">
+                                                    <button type="submit"
+                                                        class="btn btn-primary btn-user btn-block">Ajouter une
+                                                        formation</button>
+                                                    <button type="reset" class="btn">Réinitialiser</button>
+                                                </div>
+                                            </form>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--FORMULAIRE AUTHENTIFICATION-->
+                    <div class="col-xl-6 col-lg-6 col-md-9">
+
+                        
+                        <div class="card o-hidden border-0 shadow-lg my-5">
+                            <div class="card-body p-0">
+                                <!-- Nested Row within Card Body -->
+                                <div class="row">
+                                    <div class="embed-responsive col-xl-12">
+                                        <div class="p-5">
+                                            <div class="text-center">
+                                                <h1 class="h4 text-gray-900 mb-4">Se connecter</h1>
+                                            </div>
+                                            <form class="user" method="POST" action="/connecter">
+                                                <div class="form_group">
+                                                    <label>Numéro de téléphone</label>
+                                                    <input class="form-control" type="text" id="prenom"
+                                                        name="prenom" placeholder="Téléphone">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Mot de passe</label>
+                                                    <input class="form-control" type="password">
+                                                </div>
+                                                
                                                 <div class="text-center">
                                                     <button type="submit"
                                                         class="btn btn-primary btn-user btn-block">Ajouter une
