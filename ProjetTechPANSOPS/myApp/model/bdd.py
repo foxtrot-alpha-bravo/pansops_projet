@@ -197,6 +197,7 @@ def add_formation_MAC(id_agent,id_maintien_competences,date_participation_agent,
     "error" : "Failed add formations data"
     }
     lastId = bddGen.addData(cnx, sql, param, msg)
+    print(lastId)
     cnx.close()
     return lastId
 
