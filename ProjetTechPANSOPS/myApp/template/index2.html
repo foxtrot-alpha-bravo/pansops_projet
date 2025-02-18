@@ -108,8 +108,12 @@
                                             {%elif 'red' in agent.couleurM%}
                                             <td class="table-red">Aucune donnée</td>
                                             {%endif%}
-                                            <td>{{agent.debut_activite_enac}}</td>
-                                            <td>{{agent.fin_formation_theorique_agent}}</td>
+                                            {%if agent.debut_activite_enac%}
+                                            <td>{{agent.debut_activite_enac.strftime("%d/%m/%Y")}}</td>
+                                            {%else%}
+                                            <td>Inconnu</td>
+                                            {%endif%}
+                                            <td>{{agent.fin_formation_theorique_agent.strftime("%d/%m/%Y")}}</td>
                                             <td><a href="/detail_agent/{{agent.id_agents}}">Détail</a></td>
                                             {%endif%}
                                             
