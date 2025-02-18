@@ -69,13 +69,17 @@
                                     <thead>
                                         <th>Intitulé de la formation</th>
                                         <th>Date de fin de formation</th>
+                                        <th>Commentaires</th>
                                         
                                     </thead>
                                     <tbody>
                                         {%for formation in detail_agent%}
                                         <tr>
                                         <td>{{formation.titre_maintien_competences}}</td>
-                                        <td>{{formation.date_participation_agent}}</td></tr>
+                                        <td>{{formation.date_participation_agent}}</td>
+                                        <td>{{formation.commentaires}}</td>
+                                    </tr>
+                                        
                                         {%endfor%}
                                     </tbody>
                                 </table>

@@ -1,4 +1,5 @@
 from . import bddGen
+import hashlib
 
 def get_data():
     cnx=bddGen.connexion()
@@ -15,6 +16,23 @@ def get_data():
     cnx.close()
     
     return listeAgents
+
+#Requête d'authentification
+def verifAuthData(tel_agent, mdp):
+    mdp=hashlib.sha256(mdp.encode())
+    mdpC=mdp.hexdigest()
+    cnx = bddGen.connexion()
+    if cnx is None: return None
+    sql = "SELECT * FROM agents WHERE tel_agent=%s and motPasse=%s"
+    param=(tel_agent, mdpC)
+    msg = {
+        "success":"authOK",
+        "error" : "Failed get Auth data"
+}
+# requête par fetchone
+    user = bddGen.selectOneData(cnx, sql, param, msg)
+    cnx.close()
+    return user
 
 def getAll_data():
     cnx=bddGen.connexion()

@@ -76,7 +76,7 @@
                             {% if session['datesouhaite']==0 %}
                                 <h6 class="m-0 font-weight-bold text-primary">Liste des agents actifs</h6>
                             {% else %}
-                                <h6 class="m-0 font-weight-bold text-primary">Liste des agents actifs le {{session['newdate']}}</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">Situations regardant les aptitudes à date du {{date_ajour.strftime("%d/%m/%Y")}}</h6>
                              {% endif %}
                            
                            
@@ -102,7 +102,7 @@
                                             {%if agent.statut_agent=='Actif'%}
                                             <td>{{agent.nom_agent}}</td>
                                             <td>{{agent.prenom_agent}}</td>
-                                            <td>{{agent.date_naissance_agent}}</td>
+                                            <td>{{agent.date_naissance_agent.strftime('%d/%m/%Y')}}</td>
                                             <td>{{agent.tel_agent}}</td>
                                             {%if 'vert' in agent.couleur%}
                                             <td class="table-green">{{agent.jours_ecart}} jours restants</td>

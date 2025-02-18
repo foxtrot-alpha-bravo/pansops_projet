@@ -142,7 +142,7 @@ def checkdate():
     listeMaint=bdd.get_datacheck(date_formcheck)   #récupère les trois dernières actions de maintien de compétences avent la date du formulaire(voir requête sql via  fichier bdd fonction:get_datacheck(date_formcheck)
     listeAgents=bdd.get_datacheckFC(date_formcheck) 
     listeMAC=bdd.get_actionsMAC_data()
-    params={'listeAgents':listeAgents,'listeMAC':listeMAC,'listeMaint':listeMaint}
+    
     
     for k in range(len(listeAgents)): #La fonction sera exécutée pour chaque agent 
         if listeAgents[k]["derniere_formation"]=='None' : #Si l'agent n'a aucune formation enregistrée
@@ -181,5 +181,33 @@ def checkdate():
             else :
                 listeMaint[i]['couleurM'] = 'rouge'
         listeAgents[i]['couleurM'] = listeMaint[i]['couleurM']
+        
+        params={'listeAgents':listeAgents,'listeMAC':listeMAC,'listeMaint':listeMaint,'date_ajour':date_ajour}
+        params=f.messageInfo(params)
     return render_template('index2.html',**params)
 
+@app.route("/connecter", methods=["POST"])
+def connecter():
+    login = request.form['tel']
+    password = request.form['mdp']
+    #vérification de paramètres en BDD
+    user = bdd.verifAuthData(login, password)
+    try:
+        # Authentification réussie
+        session["id_agents"] = user["id_agents"]
+        session["nom_agent"] = user["nom_agent"]
+        session["prenom_agent"] = user["prenom_agent"]
+        session["statut_admin_agent"] = user["statut_admin_agent"]
+        session["infoVert"] = "Authentification réussie"
+        return redirect('/')
+    except TypeError as err:
+        # Authentification refusée
+        session["infoRouge"] = "Authentification refusée"
+        return redirect("/")
+    
+@app.route("/logout")
+def logout():
+    session.clear() # suppression de la session
+    #f.messageInfo({})
+    session["infoBleu"] = "Vous êtes déconnecté. Merci de votre visite"
+    return redirect("/")
