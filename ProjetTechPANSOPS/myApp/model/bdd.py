@@ -43,7 +43,6 @@ def get_dataMAINT():
         "error" : "Failed get maint data"
 }
     listeMaint=bddGen.selectData(cnx,sql,param,msg)
-    print(listeMaint)
     cnx.close()
     
     return listeMaint
@@ -60,7 +59,6 @@ def get_dateFC():
 }
     dateFC=bddGen.selectData(cnx,sql,param,msg)
     cnx.close()
-    print(dateFC)
     return dateFC
 
 
@@ -88,10 +86,75 @@ def get_actionsMAC_one_agent(idAgent):
     msg={
         "success":"OKdetail_agent",
         "error" : "Failed get detail_agent data"
+
 }
     listeMAC_one_agent=bddGen.selectData(cnx,sql,param,msg)
     cnx.close()
     return listeMAC_one_agent
+
+def get_datacheck(date_formcheck):
+    cnx=bddGen.connexion()
+    if cnx is None: return None
+    sql='''WITH ranked_trainings AS (
+    SELECT
+        pa.id_agent,
+        pa.date_participation_agent,
+        ROW_NUMBER() OVER (
+            PARTITION BY pa.id_agent
+            ORDER BY pa.date_participation_agent DESC
+        ) AS row_num
+    FROM participation_agent pa
+    WHERE
+        pa.id_maintien_competences BETWEEN 1 AND 5
+        AND pa.date_participation_agent <= %s
+)
+SELECT
+    a.*,
+    COALESCE(t1.date_participation_agent, 'None') AS derniere_formation_1,
+    COALESCE(t2.date_participation_agent, 'None') AS derniere_formation_2,
+    COALESCE(t3.date_participation_agent, 'None') AS derniere_formation_3
+FROM agents a
+LEFT JOIN ranked_trainings t1 ON a.id_agents = t1.id_agent AND t1.row_num = 1
+LEFT JOIN ranked_trainings t2 ON a.id_agents = t2.id_agent AND t2.row_num = 2
+LEFT JOIN ranked_trainings t3 ON a.id_agents = t3.id_agent AND t3.row_num = 3;'''
+    param=(date_formcheck,)
+    msg={
+        "success":"OKcheck",
+        "error" : "Failed get checkdata data"
+
+}
+    listechecktime=bddGen.selectData(cnx,sql,param,msg)
+    cnx.close()
+    return listechecktime
+
+def get_datacheckFC(date_formcheck):
+    print(date_formcheck)
+    cnx=bddGen.connexion()
+    if cnx is None: return None
+    sql='''SELECT
+    agents.*,
+    COALESCE(DATE_ADD(latest_training.date_participation_agent, INTERVAL 2 YEAR), 'None') AS derniere_formation
+FROM agents
+LEFT JOIN (
+    SELECT
+        id_agent,
+        MAX(date_participation_agent) AS date_participation_agent
+    FROM participation_agent
+    WHERE
+        id_maintien_competences = 6
+        AND date_participation_agent <= %s
+    GROUP BY id_agent
+) AS latest_training
+ON agents.id_agents = latest_training.id_agent;'''
+    param=(date_formcheck,)
+    msg={
+        "success":"OKcheckFC",
+        "error" : "Failed get checkdataFC data"
+
+}
+    listechecktimeFC=bddGen.selectData(cnx,sql,param,msg)
+    cnx.close()
+    return listechecktimeFC
 
 def get_name_one_agent(idAgent):
     cnx=bddGen.connexion()

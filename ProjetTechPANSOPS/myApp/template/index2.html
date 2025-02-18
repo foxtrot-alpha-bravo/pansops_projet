@@ -61,7 +61,25 @@
                     </div>
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Liste des agents actifs</h6>
+                            <form class="user" method="POST" action="/check_date">
+                                <label>Date à vérifier</label>
+                                                    <div class="form-group">
+                                                        <input type="date" class="form-control"
+                                                            name="date_formcheck" required>
+                                                    </div>
+                                                    <div class="text-center">
+                                                        <button type="submit"
+                                                            class="btn btn-primary btn-user btn-block">Valider</button>
+                                                        <button type="reset" class="btn">Réinitialiser</button>
+                                                    </div>
+                                                </form>
+                            {% if session['datesouhaite']==0 %}
+                                <h6 class="m-0 font-weight-bold text-primary">Liste des agents actifs</h6>
+                            {% else %}
+                                <h6 class="m-0 font-weight-bold text-primary">Liste des agents actifs le {{session['newdate']}}</h6>
+                             {% endif %}
+                           
+                           
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -84,7 +102,7 @@
                                             {%if agent.statut_agent=='Actif'%}
                                             <td>{{agent.nom_agent}}</td>
                                             <td>{{agent.prenom_agent}}</td>
-                                            <td>{{agent.date_naissance_agent.strftime("%d/%m/%Y")}}</td>
+                                            <td>{{agent.date_naissance_agent}}</td>
                                             <td>{{agent.tel_agent}}</td>
                                             {%if 'vert' in agent.couleur%}
                                             <td class="table-green">{{agent.jours_ecart}} jours restants</td>
