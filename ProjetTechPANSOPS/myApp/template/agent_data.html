@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
     <title>Proc'ENAC</title>
     <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
     <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
@@ -23,9 +22,14 @@
     
 
 </head>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" />
+
 <body id="page-top">
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.0/dist/bootstrap-table.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.0/dist/bootstrap-table.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.29.0/tableExport.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.29.0/libs/jsPDF/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
+
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -62,10 +66,12 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Détail des formations de l'agent {%for i in name_agent%} {{i.nom_agent}} {{ i.prenom_agent }} {%endfor%}</h6>
+                            <input type="button" onclick="generate_livret()" value="Exporter la liste de formations">
                         </div>
                         <div class="card-body">
+                            
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="liste_formations" data-search='true' width="100%" cellspacing="0" data-show-export="true">
                                     <thead>
                                         <th>Intitulé de la formation</th>
                                         <th>Date de fin de formation</th>
@@ -86,7 +92,6 @@
                             </div>
                         </div>
                     </div>
-
 
                     <!-- Content Row -->
                     <div class="row">
@@ -192,9 +197,9 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Logout Modal-->
-
     {%include('scripts.html')%}
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+
 </body>
 
 </html>
