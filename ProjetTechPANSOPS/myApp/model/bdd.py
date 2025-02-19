@@ -53,7 +53,26 @@ def getAll_data():
 def get_dataMAINT():
     cnx=bddGen.connexion()
     if cnx is None: return None
-    sql="WITH ranked_trainings AS ( SELECT pa.id_agent, pa.date_participation_agent, ROW_NUMBER() OVER (PARTITION BY pa.id_agent ORDER BY pa.date_participation_agent DESC) AS row_num FROM participation_agent pa WHERE pa.id_maintien_competences BETWEEN 1 AND 5 ) SELECT a.*, COALESCE(t1.date_participation_agent, 'None') AS derniere_formation_1, COALESCE(t2.date_participation_agent, 'None') AS derniere_formation_2, COALESCE(t3.date_participation_agent, 'None') AS derniere_formation_3 FROM agents a LEFT JOIN ranked_trainings t1 ON a.id_agents = t1.id_agent AND t1.row_num = 1 LEFT JOIN ranked_trainings t2 ON a.id_agents = t2.id_agent AND t2.row_num = 2 LEFT JOIN ranked_trainings t3 ON a.id_agents = t3.id_agent AND t3.row_num = 3;"
+    sql='''WITH ranked_trainings AS (
+    SELECT 
+        pa.id_agent, 
+        pa.date_participation_agent, 
+        ROW_NUMBER() OVER (
+            PARTITION BY pa.id_agent 
+            ORDER BY pa.date_participation_agent DESC
+        ) AS row_num
+    FROM participation_agent pa
+    WHERE pa.id_maintien_competences BETWEEN 1 AND 5
+)
+SELECT 
+    a.*, 
+    COALESCE(DATE_ADD(t1.date_participation_agent, INTERVAL 2 YEAR), 'None') AS derniere_formation_1,
+    COALESCE(DATE_ADD(t2.date_participation_agent, INTERVAL 2 YEAR), 'None') AS derniere_formation_2,
+    COALESCE(DATE_ADD(t3.date_participation_agent, INTERVAL 2 YEAR), 'None') AS derniere_formation_3
+FROM agents a
+LEFT JOIN ranked_trainings t1 ON a.id_agents = t1.id_agent AND t1.row_num = 1
+LEFT JOIN ranked_trainings t2 ON a.id_agents = t2.id_agent AND t2.row_num = 2
+LEFT JOIN ranked_trainings t3 ON a.id_agents = t3.id_agent AND t3.row_num = 3;'''
 
     param=None
     msg={
@@ -128,13 +147,14 @@ def get_datacheck(date_formcheck):
 )
 SELECT
     a.*,
-    COALESCE(t1.date_participation_agent, 'None') AS derniere_formation_1,
-    COALESCE(t2.date_participation_agent, 'None') AS derniere_formation_2,
-    COALESCE(t3.date_participation_agent, 'None') AS derniere_formation_3
+    COALESCE(DATE_ADD(t1.date_participation_agent, INTERVAL 2 YEAR), 'None') AS derniere_formation_1,
+    COALESCE(DATE_ADD(t2.date_participation_agent, INTERVAL 2 YEAR), 'None') AS derniere_formation_2,
+    COALESCE(DATE_ADD(t3.date_participation_agent, INTERVAL 2 YEAR), 'None') AS derniere_formation_3
 FROM agents a
 LEFT JOIN ranked_trainings t1 ON a.id_agents = t1.id_agent AND t1.row_num = 1
 LEFT JOIN ranked_trainings t2 ON a.id_agents = t2.id_agent AND t2.row_num = 2
-LEFT JOIN ranked_trainings t3 ON a.id_agents = t3.id_agent AND t3.row_num = 3;'''
+LEFT JOIN ranked_trainings t3 ON a.id_agents = t3.id_agent AND t3.row_num = 3;
+'''
     param=(date_formcheck,)
     msg={
         "success":"OKcheck",
@@ -205,11 +225,11 @@ def add_agent(nom,prenom,date_naissance,tel,date_fin_formation,debut_activite_en
     cnx.close()
     return lastId
 
-def add_formation_MAC(id_agent,id_maintien_competences,date_participation_agent,commentaires):
+def add_formation_MAC(id_agent,id_maintien_competences,date_participation_agent,date_debut_formation,commentaires):
     cnx = bddGen.connexion()
     if cnx is None: return None
-    sql = "INSERT INTO `participation_agent` (`id_agent`,`id_maintien_competences`, `date_participation_agent`,`commentaires`) VALUES (%s, %s, %s,%s);"
-    param = (id_agent,id_maintien_competences,date_participation_agent,commentaires)
+    sql = "INSERT INTO `participation_agent` (`id_agent`,`id_maintien_competences`, `date_participation_agent`,`date_debut_formation`,`commentaires`) VALUES (%s, %s, %s,%s,%s);"
+    param = (id_agent,id_maintien_competences,date_participation_agent,date_debut_formation,commentaires)
     msg = {
     "success":"addFormationOK",
     "error" : "Failed add formations data"
