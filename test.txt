@@ -27,3 +27,21 @@ mardi la soutenance
 logo enac sur le site ->FAB
 logo enac sur le site
 ancien tableau excel dans les annexes?
+
+20/02
+dans la page detail au lieu de intitule formation mettre intitulé de la tache ou regarder dans l'arreté comment c'est écrit
+deuxieme page du livret individuel date génération du fichier et par quoi
+avoir une case pour que le chef de sub puisse signer 
+rajouter les données de type arrivée à l'enac,... sur le livret
+autonome et expert à rajouter 
+champ fin formation pratique
+debut formation théorique
+afficher nom de l'agent connecté
+quand on veut voir si les agents étaient actifs à un instant t afficher tout le monde actif et inactif
+arreté de 2022 maintenant 
+vérifier si les tâches sont écrites comme sur l'arrêté
+mettre dans l'ordre chronologique sur le livret
+Réinitialiser les mots de passe?
+enlever date de naissance telephone de la page d'Accueil
+quand connecté voir seulement son detail(pas important de fou)
+commencer à entrer des agents avec ses actions pour voir(avec le fichier excel)
