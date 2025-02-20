@@ -37,14 +37,13 @@ def index():
                 listeAgents[k]['couleur'] = 'orange'
             else :
                 listeAgents[k]['couleur'] = 'rouge'
-    for i in range(len(listeMaint)):
-        listeMaint[i]['couleurM'] = 'None'
-        if listeMaint[i]["derniere_formation_3"]=='None' :
-            listeMaint[i]['couleurM'] = 'red'
+    for i in range(len(listeMaint)):  #on redefinie une nouvelle couleur, cette fois-ci pour le maintien de compétences
+        listeMaint[i]['couleurM'] = 'None' #on set la nouvelle clé 'couleurM' pour Maintien de compétences en 'None' par défaut
+        if listeMaint[i]["derniere_formation_3"]=='None' : #on ne check que la 3e dernière formation 
+            listeMaint[i]['couleurM'] = 'red' #si il n'y a pas de 3e dernière formation, la couleur sera rouge
         else : 
-            date_maint = datetime.strptime(listeMaint[i]["derniere_formation_3"], "%Y-%m-%d").date()
+            date_maint = datetime.strptime(listeMaint[i]["derniere_formation_3"], "%Y-%m-%d").date() 
             ecart_maint = (date_maint - date_ajour).days
-            ecart_maint=ecart_maint + 730
             listeAgents[i]["jours_ecartM"]=ecart_maint
             if ecart_maint >= 365 :
                 listeMaint[i]['couleurM'] = 'vert'
@@ -96,11 +95,12 @@ def updateData(champ=None):
 
 @app.route("/add_formation_MAC",methods=['POST'])
 def add_formation_MAC():
-    id_agent=request.form['id_agent']
-    id_maintien_competences=request.form['id_maintien_competences']
-    date_participation_agent=request.form['date_participation_agent']
-    commentaires=request.form['commentaires']
-    bdd.add_formation_MAC(id_agent,id_maintien_competences,date_participation_agent,commentaires)
+    id_agent=request.form['id_agent']  #on récupère l'identifiant de l'agent depuis le formulaire html
+    id_maintien_competences=request.form['id_maintien_competences'] #on récupère l'identifiant de la participation maintien de compétences depuis le formulaire html
+    date_participation_agent=request.form['date_participation_agent'] #on récupère la date de la fin de la participation de l'agent depuis le formulaire html
+    date_debut_formation=request.form['date_debut_formation'] #on récupère la date de début de la participation de l'agent depuis le formulaire html
+    commentaires=request.form['commentaires']  #on récupère les commentaires depuis le formulaire html
+    bdd.add_formation_MAC(id_agent,id_maintien_competences,date_participation_agent,date_debut_formation,commentaires)  #on ajoute toutes ces données à la base de données
     return redirect('/')
 
 
@@ -170,7 +170,6 @@ def checkdate():
             date_maint = datetime.strptime(listeMaint[i]["derniere_formation_3"], "%Y-%m-%d").date()
             date_ajour=datetime.strptime(session['newdate'], "%Y-%m-%d").date()
             ecart_maint = (date_maint - date_ajour).days
-            ecart_maint=ecart_maint + 730
             listeAgents[i]["jours_ecartM"]=ecart_maint
             if ecart_maint >= 365 :
                 listeMaint[i]['couleurM'] = 'vert'
