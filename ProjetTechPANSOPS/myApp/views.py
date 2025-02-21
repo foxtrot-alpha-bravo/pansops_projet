@@ -133,6 +133,8 @@ def ajoutagent():
         session["infoRouge"] = "Problème ajout membre"
     return redirect('/')
 
+
+
 @app.route('/check_date',methods=['POST'])
 def checkdate(): 
     session['datesouhaite']=1  
@@ -184,6 +186,19 @@ def checkdate():
         params={'listeAgents':listeAgents,'listeMAC':listeMAC,'listeMaint':listeMaint,'date_ajour':date_ajour}
         params=f.messageInfo(params)
     return render_template('index2.html',**params)
+
+@app.route('/update_password',methods=['POST'])
+def update_password():
+    tel_agent=request.form['tel_agent']
+    old_pwd=request.form['old_pwd']
+    new_pwd=request.form['new_pwd']
+    user=bdd.verifAuthData(tel_agent,old_pwd)
+    id_agents=user['id_agents']
+    new_pwd=hashlib.sha256(new_pwd.encode())
+    new_pwd=new_pwd.hexdigest()
+    bdd.updateAuthData(new_pwd,id_agents)
+    return redirect('/')
+
 
 @app.route("/connecter", methods=["POST"])
 def connecter():

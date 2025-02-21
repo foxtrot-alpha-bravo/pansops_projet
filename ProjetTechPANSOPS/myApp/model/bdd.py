@@ -34,6 +34,8 @@ def verifAuthData(tel_agent, mdp):
     cnx.close()
     return user
 
+
+
 def getAll_data():
     cnx=bddGen.connexion()
     if cnx is None: return None
@@ -250,4 +252,17 @@ def update_AgentData(champ,idAgent,newvalue):
     "error" : "Failed update agents data"
     }
     bddGen.updateData(cnx,sql,param,msg)
+    cnx.close()
+    
+def updateAuthData(new_pwd, id_agents):
+    cnx = bddGen.connexion()
+    if cnx is None: return None
+    sql = "UPDATE agents SET motPasse=%s WHERE id_agents=%s"
+    param=(new_pwd,id_agents)
+    msg = {
+        "success":"update_pwd OK",
+        "error" : "Failed update password data"
+}
+# requête par fetchone
+    bddGen.updateData(cnx, sql, param, msg)
     cnx.close()
