@@ -48,23 +48,10 @@
     <script type="text/javascript">
         function generate_livret() {
         var doc = new jsPDF();
-        var htmlstring='';
-        var tempVarToCheckPageHeight=0;
-        var pageHeight=0;
-        pageHeight=doc.internal.pageSize.height;
-        specialElementHandlers = {  
-            // element with id of "bypass" - jQuery style selector  
-            '#bypassme': function(element, renderer) {  
-                // true = "handled elsewhere, bypass text extraction"  
-                return true  
-            }  
-        };  
-        var y = 10;
-        doc.text(10, y = y + 50, "Livret de formation et de suivi");
-        doc.addPage();  
+         
         doc.autoTable({  
             html: '#liste_formations',  
-            startY: 55,  
+            startY: 25,  
             theme: 'grid',  
             
         })  
