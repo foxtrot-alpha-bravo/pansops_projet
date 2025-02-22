@@ -17,6 +17,7 @@ def index():
     listeAgents=bdd.get_data()
     listeMAC=bdd.get_actionsMAC_data()
     listeMaint=bdd.get_dataMAINT()
+    print(listeAgents)
     session['datesouhaite']=0
     params={'listeAgents':listeAgents,'listeMAC':listeMAC,'listeMaint':listeMaint}
     for k in range(len(listeAgents)): #La fonction sera exécutée pour chaque agent 
