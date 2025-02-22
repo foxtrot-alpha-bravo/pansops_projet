@@ -195,17 +195,21 @@
                                     <div class="embed-responsive col-xl-12">
                                         <div class="p-5">
                                             <div class="text-center">
-                                                <h1 class="h4 text-gray-900 mb-4">Se connecter</h1>
+                                                <h1 class="h4 text-gray-900 mb-4">Changer de mot de passe</h1>
                                             </div>
-                                            <form class="user" method="POST" action="/connecter">
+                                            <form class="user" method="POST" action="/update_password">
                                                 <div class="form_group">
-                                                    <label>Numéro de téléphone</label>
-                                                    <input class="form-control" type="text" id="prenom" name="prenom"
-                                                        placeholder="Téléphone">
+                                                    <input class="form-control" type="text"  name="tel_agent"
+                                                        placeholder="Numéro de téléphone">
+                                                    
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Mot de passe</label>
-                                                    <input class="form-control" type="password">
+                                                <input class="form-control" type="text" name="old_pwd"
+                                                        placeholder="Ancien mot de passe">
+                                                </div>
+                                                <div class="form-group">
+                                                    
+                                                    <input class="form-control" type="text" name="new_pwd" placeholder="Nouveau mot de passe">
                                                 </div>
 
                                                 <div class="text-center">
