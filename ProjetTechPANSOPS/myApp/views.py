@@ -1,8 +1,10 @@
-from flask import Flask, render_template, redirect, session, request
+from flask import Flask, render_template, redirect, session, request,jsonify,send_file
 from myApp.model import bdd
 from myApp.controller import function as f
 import random,hashlib,datetime,locale
 from datetime import datetime
+from fillpdf import fillpdfs
+import os
 """from dateutil.relativedelta import relativedelta"""
 locale.setlocale(locale.LC_ALL, "fr_FR.UTF-8")
 
@@ -206,18 +208,32 @@ def connecter():
     password = request.form['mdp']
     #vérification de paramètres en BDD
     user = bdd.verifAuthData(login, password)
+    print(user)
     try:
         # Authentification réussie
         session["id_agents"] = user["id_agents"]
         session["nom_agent"] = user["nom_agent"]
         session["prenom_agent"] = user["prenom_agent"]
+        session['date_naissance_agent']=user["date_naissance_agent"]
         session["statut_admin_agent"] = user["statut_admin_agent"]
         session["infoVert"] = "Authentification réussie"
+        print(session)
         return redirect('/')
     except TypeError as err:
         # Authentification refusée
         session["infoRouge"] = "Authentification refusée"
         return redirect("/")
+    
+@app.route('/json_data_pdf')
+def json_data_pdf():
+    data={
+        'nom_titulaire':session.get['nom_agent'],
+        'prenom_titulaire':session.get['prenom_agent'],
+        'ddn_titulaire':session.get['date_naissance_agent']
+        
+    }
+    print(data)
+    return jsonify(data)
     
 @app.route("/logout")
 def logout():
@@ -225,3 +241,27 @@ def logout():
     #f.messageInfo({})
     session["infoBleu"] = "Vous êtes déconnecté. Merci de votre visite"
     return redirect("/")
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+@app.route('/generate_pdf',methods=['GET'])
+def generate_pdf():
+    template_pdf = os.path.join(BASE_DIR, "static", "livret_pansops_intro.pdf")
+    filled_pdf = os.path.join(BASE_DIR, "static", "filled_pdf.pdf")
+    field_values={
+        'nom_titulaire':session['nom_agent'],
+        'prenom_titulaire':session['prenom_agent'],
+        'ddn_titulaire':session['date_naissance_agent']
+    }
+    fillpdfs.write_fillable_pdf(template_pdf,filled_pdf,field_values)
+    
+    return send_file(filled_pdf, as_attachment=True)
+
+
+@app.route('/debug_path', methods=['GET'])
+def debug_path():
+    template_pdf = os.path.join(os.getcwd(), 'static', 'livret_pansops_intro.pdf')
+    
+    return {
+        "Chemin absolu attendu": template_pdf,
+        "Fichier trouvé": os.path.exists(template_pdf)
+    }
