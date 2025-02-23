@@ -45,16 +45,16 @@
     
     
     
-    <script type="text/javascript">
+    <script type="text/javascript"> //On utilise une fonction Javascript pour extraire les données du tableau HTML qui liste les formations effectuées par l'agent concerné
         function generate_livret() {
-        var doc = new jsPDF();
+        var doc = new jsPDF(); //On déclare la variable 'doc', qui appelle la librairie jsPDF
          
-        doc.autoTable({  
-            html: '#liste_formations',  
-            startY: 25,  
+        doc.autoTable({  //La librairie jsPDF appellée au-dessus génère un tableau automatiquement
+            html: '#liste_formations',  //Les données du tableau qui sera dans le PDF sont issues du tableau HTML ayant l'identifiant 'liste_formations'
+            startY: 25,  //Le tableau sera inséré à partir de 25 pixels depuis le haut du PDF
             theme: 'grid',  
             
         })  
-        doc.save('livret_formation_suivi.pdf');
+        doc.save('livret_formation_suivi.pdf'); //Le PDF est enregistré et aura le nom indiqué
         }
       </script>
