@@ -1,4 +1,16 @@
 from flask import session
+from datetime import datetime
+import email.utils
+
+#Permet de récupérer une date présente en session, puis de la convertir au format approprié au fichier PDF
+def format_date(date_str):
+    try:
+        date_obj = email.utils.parsedate_to_datetime(date_str)
+        return date_obj.strftime("%d/%m/%Y")
+    except Exception:
+        return " "
+    
+    
 # passe les messages d'info en paramètres
 def messageInfo(params = None):
     if params is None:

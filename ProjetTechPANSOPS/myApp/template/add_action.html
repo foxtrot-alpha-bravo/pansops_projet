@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Ajouter une tâche</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div id="wrapper">
+        {%include('/sidebar.html')%}
+        <div id="content-wrapper" class="d-flex flex-row">
+            <div class="container">
+                {%include('info.html')%}
+                <!-- Outer Row -->
+                <div class="row justify-content-center">
+
+
+                    <div class="col-xl-6 col-lg-6 col-md-9">
+
+                        <div class="card o-hidden border-0 shadow-lg my-5">
+                            <div class="card-body p-0">
+                                <!-- Nested Row within Card Body -->
+                                <div class="row">
+                                    <div class="embed-responsive col-xl-12">
+                                        <div class="p-5">
+                                            <div class="text-center">
+                                                <h1 class="h4 text-gray-900 mb-4">Ajout d'une formation "Maintien et
+                                                    actualisation des compétences"</h1>
+                                            </div>
+                                            <form class="user" method="POST" action="/add_formation_MAC">
+                                                <div>
+                                                    <label>Agent concerné</label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <select name="id_agent" class="form-control" required>
+                                                        <option value="" selected disabled>Choisissez un agent...
+                                                        </option>
+                                                        {%if 'Administrateur' in session["statut_admin_agent"]%}
+                                                        {%for agent in listeAgents%}
+                                                        <option value="{{agent.id_agents}}">{{agent.nom_agent}}
+                                                            {{agent.prenom_agent}}</option>
+                                                        {%endfor%}
+                                                        {%else%}
+                                                        <option value="{{session['id_agents']}}">
+                                                            {{session["nom_agent"]}} {{session["prenom_agent"]}}
+                                                        </option>
+                                                        {%endif%}
+
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Formation concernée</label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <select name="id_maintien_competences" class="form-control"
+                                                        required>
+                                                        <option value="" selected disabled>Choisissez une tâche...
+                                                        </option>
+                                                        {%for action in listeMAC%}
+                                                        <option value="{{action.id_maintien_competences}}">
+                                                            {{action.titre_maintien_competences}}</option>
+                                                        {%endfor%}
+                                                    </select>
+                                                    <label>Date début</label>
+                                                    <div class="form-group">
+                                                        <input type="date" class="form-control"
+                                                            name="date_debut_formation">
+                                                    </div>
+                                                </div>
+                                                <label>Date de fin de l'action</label>
+                                                <div class="form-group">
+                                                    <input type="date" class="form-control"
+                                                        name="date_participation_agent">
+                                                </div>
+
+                                                <label>Commentaires</label>
+                                                <div class="form-group">
+                                                    <textarea name="commentaires" id="commentaires"
+                                                        class="form-control zonedetexte"></textarea>
+                                                </div>
+                                                <div class="text-center">
+                                                    <button type="submit"
+                                                        class="btn btn-primary btn-user btn-block">Ajouter une
+                                                        formation</button>
+                                                    <button type="reset" class="btn">Réinitialiser</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--FORMULAIRE AUTHENTIFICATION-->
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+    </div>
+    {%include('scripts.html')%}
+
+</body>
+
+</html>
