@@ -21,12 +21,12 @@ def index():
     listeMaint=bdd.get_dataMAINT()
     if 'nom_agent' in session:
         agent_connecte=session['nom_agent']+' '+session['prenom_agent']
+        id_agent_connecte=session['id_agents']
     else:
         agent_connecte=''
-        
-    print(listeAgents)
+        id_agent_connecte=None
     session['datesouhaite']=0
-    params={'listeAgents':listeAgents,'listeMAC':listeMAC,'listeMaint':listeMaint,'agent_connecte':agent_connecte}
+    params={'listeAgents':listeAgents,'listeMAC':listeMAC,'listeMaint':listeMaint,'agent_connecte':agent_connecte,'id_agent_connecte':id_agent_connecte}
     for k in range(len(listeAgents)): #La fonction sera exécutée pour chaque agent 
         if listeAgents[k]["derniere_formation"]=='None' : #Si l'agent n'a aucune formation enregistrée
             listeAgents[k]['couleur'] = 'red' #La couleur revenant dans le dictionnaire est rouge, et sera affichée en conséquence
@@ -72,11 +72,13 @@ def index():
 def detailAgent(id_agents=''):
     detail_agent=bdd.get_actionsMAC_one_agent(id_agents)
     name_agent=bdd.get_name_one_agent(id_agents)
+    id_agent_connecte=session['id_agents']
     if 'nom_agent' in session:
         agent_connecte=session['nom_agent']+' '+session['prenom_agent']
     else:
         agent_connecte=""
-    params={'detail_agent':detail_agent,'name_agent':name_agent,'agent_connecte':agent_connecte}
+        id_agent_connecte=None
+    params={'detail_agent':detail_agent,'name_agent':name_agent,'agent_connecte':agent_connecte,'id_agent_connecte':id_agent_connecte}
     return render_template('agent_data.html',**params)
 
 @app.route("/update_data")
@@ -86,10 +88,12 @@ def update_data():
     listeMaint=bdd.get_dataMAINT()
     if 'nom_agent' in session:
         agent_connecte=session['nom_agent']+' '+session['prenom_agent']
+        id_agent_connecte=session['id_agents']
     else:
         agent_connecte=''
-    agent_connecte=session['nom_agent']+' '+session['prenom_agent']
-    params={'listeAgents':listeAgents,'listeMAC':listeMAC,'listeMaint':listeMaint,'agent_connecte':agent_connecte}
+        id_agent_connecte=None
+    
+    params={'listeAgents':listeAgents,'listeMAC':listeMAC,'listeMaint':listeMaint,'agent_connecte':agent_connecte,'id_agent_connecte':id_agent_connecte}
     params=f.messageInfo(params)
     return render_template('update_data.html',**params)
 
@@ -129,9 +133,11 @@ def form_add_agent():
     listeMAC=bdd.get_actionsMAC_data()
     if 'nom_agent' in session:
         agent_connecte=session['nom_agent']+' '+session['prenom_agent']
+        id_agent_connecte=session['id_agents']
     else:
-        agent_connecte=' '
-    params={'listeAgents':listeAgents,'listeMAC':listeMAC,'agent_connecte':agent_connecte}
+        agent_connecte=''
+        id_agent_connecte=None
+    params={'listeAgents':listeAgents,'listeMAC':listeMAC,'agent_connecte':agent_connecte,'id_agent_connecte':id_agent_connecte}
     params=f.messageInfo(params)
     
     return render_template('add_agent.html', **params)
@@ -142,9 +148,11 @@ def form_add_action():
     listeMAC=bdd.get_actionsMAC_data()
     if 'nom_agent' in session:
         agent_connecte=session['nom_agent']+' '+session['prenom_agent']
+        id_agent_connecte=session['id_agents']
     else:
         agent_connecte=' '
-    params={'listeAgents':listeAgents,'listeMAC':listeMAC,'agent_connecte':agent_connecte}
+        id_agent_connecte=None
+    params={'listeAgents':listeAgents,'listeMAC':listeMAC,'agent_connecte':agent_connecte,'id_agent_connecte':id_agent_connecte}
     params=f.messageInfo(params)
     
     return render_template('add_action.html', **params)
@@ -242,10 +250,12 @@ def form_update_password():
     listeMAC=bdd.get_actionsMAC_data()
     if 'nom_agent' in session:
         agent_connecte=session['nom_agent']+' '+session['prenom_agent']
+        id_agent_connecte=session['id_agents']
     else:
         agent_connecte=' '
+        id_agent_connecte=None
 
-    params={'listeAgents':listeAgents,'listeMAC':listeMAC,'agent_connecte':agent_connecte}
+    params={'listeAgents':listeAgents,'listeMAC':listeMAC,'agent_connecte':agent_connecte,'id_agent_connecte':id_agent_connecte}
     params=f.messageInfo(params)
     return render_template('update_pwd.html',**params)
 

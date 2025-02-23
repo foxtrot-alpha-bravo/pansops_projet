@@ -1,15 +1,12 @@
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-    <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
         <div class="sidebar-brand-icon">
             <img src="/static/img/logo_enac2.png" height="50" width="55">
         </div>
         <div class="sidebar-brand-text mx-3">Proc'ENAC</div>
     </a>
-
-    <!-- Divider -->
     <hr class="sidebar-divider">
     
     {% if session['id_agents']%}
@@ -21,6 +18,7 @@
             <span>Ajouter une tâche</span></a>
             <a class="nav-link" href="/logout"><i class="fas fa-arrow-right"></i><span>Se déconnecter</span></a>
     <a class="nav-link" href="/form_update_password"><i class="fas fa-arrow-right"></i><span>Changer de mot de passe</span></a>
+    <a class="nav-link" href="/detail_agent/{{id_agent_connecte}}"><i class="fas fa-arrow-right"></i><span>Détail de mes formations</span></a>
     </li>
     
     

@@ -87,8 +87,6 @@
                                     <thead>
                                         <th>Nom</th>
                                         <th>Prénom</th>
-                                        
-                                        <th>Téléphone</th>
                                         <th>Validité de la formation continue</th>
                                         <th>Validité du maintien de compétences</th>
                                         <th>Date de prise de fonctions à l'ENAC</th>
@@ -104,8 +102,6 @@
                                             {%if agent.statut_agent=='Actif'%}
                                             <td>{{agent.nom_agent}}</td>
                                             <td>{{agent.prenom_agent}}</td>
-                                            
-                                            <td>{{agent.tel_agent}}</td>
                                             {%if 'vert' in agent.couleur%}
                                             <td class="table-green">{{agent.jours_ecart}} jours restants</td>
                                             {%elif 'jaune' in agent.couleur%}
