@@ -1,4 +1,68 @@
 
+<div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Date de naissance</th>
+                <th>Téléphone</th>
+                <th>Validité de la formation continue</th>
+                <th>Validité du maintien de compétences</th>
+                <th>Date de prise de fonctions à l'ENAC</th>
+                <th>Date fin de formation théorique</th>
+                <th>Voir détail des formations</th>
+                
+            </thead>
+            <tbody>
+                {%for agent in listeAgents%}
+                <tr>
+                    {%if agent.statut_agent=='Actif'%}
+                    <td>{{agent.nom_agent}}</td>
+                    <td>{{agent.prenom_agent}}</td>
+                    <td>{{agent.date_naissance_agent.strftime('%d/%m/%Y')}}</td>
+                    <td>{{agent.tel_agent}}</td>
+                    {%if 'vert' in agent.couleur%}
+                    <td class="table-green">{{agent.jours_ecart}} jours restants</td>
+                    {%elif 'jaune' in agent.couleur%}
+                    <td class="table-orange">{{agent.jours_ecart}} jours restants</td>
+                    {%elif 'orange' in agent.couleur%}
+                    <td class="table-orange">{{agent.jours_ecart}} jours restants</td>
+                    {%elif 'rouge' in agent.couleur%}
+                    <td class="table-red">{{agent.jours_ecart}} jours restants</td>
+                    {%elif 'red' in agent.couleur%}
+                    <td class="table-red">Aucune donnée</td>
+                    {%endif%}
+                    {%if 'vert' in agent.couleurM%}
+                    <td class="table-green">{{agent.jours_ecartM}} jours restants</td>
+                    {%elif 'jaune' in agent.couleurM%}
+                    <td class="table-orange">{{agent.jours_ecartM}} jours restants</td>
+                    {%elif 'orange' in agent.couleurM%}
+                    <td class="table-orange">{{agent.jours_ecartM}} jours restants</td>
+                    {%elif 'rouge' in agent.couleurM%}
+                    <td class="table-red">{{agent.jours_ecartM}} jours restants</td>
+                    {%elif 'red' in agent.couleurM%}
+                    <td class="table-red">Aucune donnée</td>
+                    {%endif%}
+                    {%if agent.debut_activite_enac%}
+                    <td>{{agent.debut_activite_enac.strftime("%d/%m/%Y")}}</td>
+                    {%else%}
+                    <td>Inconnu</td>
+                    {%endif%}
+                    <td>{{agent.fin_formation_theorique_agent.strftime("%d/%m/%Y")}}</td>
+                    <td><a href="/detail_agent/{{agent.id_agents}}">Détail</a></td>
+                    {%endif%}
+                    
+
+
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+
 <h2>Liste des agents</h2>
 <table>
     <thead>

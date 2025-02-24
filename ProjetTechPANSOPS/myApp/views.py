@@ -57,7 +57,7 @@ def index():
             else :
                 listeMaint[i]['couleurM'] = 'rouge'
         listeAgents[i]['couleurM'] = listeMaint[i]['couleurM']
-        params=f.messageInfo(params)  
+        params=f.messageInfo(params)
     return render_template('index2.html',**params)
 
 
