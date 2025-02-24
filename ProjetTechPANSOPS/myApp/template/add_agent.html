@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin 2 - Login</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div id="wrapper">
+        {%include('/sidebar.html')%}
+        <div id="content-wrapper" class="d-flex flex-row">
+            <div class="container">
+                {%include('info.html')%}
+                <!-- Outer Row -->
+                <div class="row justify-content-center">
+
+                    <div class="col-xl-6 col-lg-6 col-md-9">
+
+                        <div class="card o-hidden border-0 shadow-lg my-5">
+                            <div class="card-body p-0">
+                                <!-- Nested Row within Card Body -->
+                                <div class="row">
+
+                                    <div class="embed-reponsive col-xl-12">
+                                        <div class="p-5">
+                                            <div class="text-center">
+                                                <h1 class="h4 text-gray-900 mb-4">Ajout d'un agent à la base de données
+                                                </h1>
+                                            </div>
+
+                                            <form class='user' method="POST" action="/add_agent">
+                                                <div>
+                                                    <div>
+                                                        <div class="form_group">
+                                                            <label>Prénom</label>
+                                                        </div>
+                                                        <div class="form_group">
+                                                            <input class="form-control" type="text" id="prenom"
+                                                                name="prenom" placeholder="Prénom">
+                                                        </div>
+                                                        <div class="form_group">
+                                                            <label>Nom</label>
+                                                        </div>
+                                                        <div class="form_group">
+                                                            <input class="form-control" type="text" id="nom" name="nom"
+                                                                placeholder="Nom">
+                                                        </div>
+                                                        <div class="form_group">
+                                                            <label>Date de naissance</label>
+                                                        </div>
+                                                        <div class="form_group">
+                                                            <input class="form-control" type="date" id="date_naissance"
+                                                                name="date_naissance">
+                                                        </div>
+                                                        <div class="form_group">
+                                                            <label>Date de fin de formation théorique</label>
+                                                        </div>
+                                                        <div class="form_group">
+                                                            <input class="form-control" type="date"
+                                                                id="date_fin_formation" name="date_fin_formation">
+                                                        </div>
+                                                        <label>Numéro de téléphone</label>
+                                                    </div>
+                                                    <div class="form_group">
+                                                        <input class="form-control" type="text" id="tel" name="tel"
+                                                            placeholder="Numéro de téléphone">
+                                                    </div>
+                                                    <div class="form_group">
+                                                        <label>Date de prise de fonction à l'ENAC</label>
+                                                    </div>
+                                                    <div class="form_group">
+                                                        <input class="form-control" type="date" id="debut_activite_enac"
+                                                            name="debut_activite_enac">
+                                                    </div>
+                                                    <p></p>
+                                                    <div class="text-center">
+                                                        <button class="btn btn-primary btn-user btn-block"
+                                                            type="submit">Ajouter un agent</button>
+                                                        <button class="btn" type="reset">Réinitialiser</button>
+                                                    </div>
+
+                                                </div>
+                                        </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+    </div>
+    {%include('scripts.html')%}
+
+</body>
+
+</html>

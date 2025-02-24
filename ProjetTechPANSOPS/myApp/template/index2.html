@@ -87,13 +87,13 @@
                                     <thead>
                                         <th>Nom</th>
                                         <th>Prénom</th>
-                                        <th>Date de naissance</th>
-                                        <th>Téléphone</th>
                                         <th>Validité de la formation continue</th>
                                         <th>Validité du maintien de compétences</th>
                                         <th>Date de prise de fonctions à l'ENAC</th>
                                         <th>Date fin de formation théorique</th>
+                                        {%if 'Administrateur' in session['statut_admin_agent']%}
                                         <th>Voir détail des formations</th>
+                                        {%endif%}
                                         
                                     </thead>
                                     <tbody>
@@ -102,8 +102,6 @@
                                             {%if agent.statut_agent=='Actif'%}
                                             <td>{{agent.nom_agent}}</td>
                                             <td>{{agent.prenom_agent}}</td>
-                                            <td>{{agent.date_naissance_agent.strftime('%d/%m/%Y')}}</td>
-                                            <td>{{agent.tel_agent}}</td>
                                             {%if 'vert' in agent.couleur%}
                                             <td class="table-green">{{agent.jours_ecart}} jours restants</td>
                                             {%elif 'jaune' in agent.couleur%}
@@ -132,7 +130,9 @@
                                             <td>Inconnu</td>
                                             {%endif%}
                                             <td>{{agent.fin_formation_theorique_agent.strftime("%d/%m/%Y")}}</td>
+                                            {%if 'Administrateur' in session['statut_admin_agent']%}
                                             <td><a href="/detail_agent/{{agent.id_agents}}">Détail</a></td>
+                                            {%endif%}
                                             {%endif%}
                                             
 
@@ -147,82 +147,6 @@
 
 
                     <!-- Content Row -->
-                    <div class="row">
-
-                        <!-- Content Column -->
-                        <div class="col-lg-6 mb-4">
-
-                            <!-- Color System -->
-                            <div class="row">
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-primary text-white shadow">
-                                        <div class="card-body">
-                                            Primary
-                                            <div class="text-white-50 small">#4e73df</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-success text-white shadow">
-                                        <div class="card-body">
-                                            Success
-                                            <div class="text-white-50 small">#1cc88a</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-info text-white shadow">
-                                        <div class="card-body">
-                                            Info
-                                            <div class="text-white-50 small">#36b9cc</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-warning text-white shadow">
-                                        <div class="card-body">
-                                            Warning
-                                            <div class="text-white-50 small">#f6c23e</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-danger text-white shadow">
-                                        <div class="card-body">
-                                            Danger
-                                            <div class="text-white-50 small">#e74a3b</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-secondary text-white shadow">
-                                        <div class="card-body">
-                                            Secondary
-                                            <div class="text-white-50 small">#858796</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-light text-black shadow">
-                                        <div class="card-body">
-                                            Light
-                                            <div class="text-black-50 small">#f8f9fc</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-dark text-white shadow">
-                                        <div class="card-body">
-                                            Dark
-                                            <div class="text-white-50 small">#5a5c69</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
                 </div>
                 <!-- /.container-fluid -->
 

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, session, request,jsonify,send_file
+from flask import Flask, render_template, redirect, session, request,send_file
 from myApp.model import bdd
 from myApp.controller import function as f
 import random,hashlib,datetime,locale
@@ -19,9 +19,14 @@ def index():
     listeAgents=bdd.get_data()
     listeMAC=bdd.get_actionsMAC_data()
     listeMaint=bdd.get_dataMAINT()
-    print(listeAgents)
+    if 'nom_agent' in session:
+        agent_connecte=session['nom_agent']+' '+session['prenom_agent']
+        id_agent_connecte=session['id_agents']
+    else:
+        agent_connecte=''
+        id_agent_connecte=None
     session['datesouhaite']=0
-    params={'listeAgents':listeAgents,'listeMAC':listeMAC,'listeMaint':listeMaint}
+    params={'listeAgents':listeAgents,'listeMAC':listeMAC,'listeMaint':listeMaint,'agent_connecte':agent_connecte,'id_agent_connecte':id_agent_connecte}
     for k in range(len(listeAgents)): #La fonction sera exécutée pour chaque agent 
         if listeAgents[k]["derniere_formation"]=='None' : #Si l'agent n'a aucune formation enregistrée
             listeAgents[k]['couleur'] = 'red' #La couleur revenant dans le dictionnaire est rouge, et sera affichée en conséquence
@@ -57,7 +62,9 @@ def index():
             else :
                 listeMaint[i]['couleurM'] = 'rouge'
         listeAgents[i]['couleurM'] = listeMaint[i]['couleurM']
+        
         params=f.messageInfo(params)
+         
     return render_template('index2.html',**params)
 
 
@@ -65,7 +72,13 @@ def index():
 def detailAgent(id_agents=''):
     detail_agent=bdd.get_actionsMAC_one_agent(id_agents)
     name_agent=bdd.get_name_one_agent(id_agents)
-    params={'detail_agent':detail_agent,'name_agent':name_agent}
+    id_agent_connecte=session['id_agents']
+    if 'nom_agent' in session:
+        agent_connecte=session['nom_agent']+' '+session['prenom_agent']
+    else:
+        agent_connecte=""
+        id_agent_connecte=None
+    params={'detail_agent':detail_agent,'name_agent':name_agent,'agent_connecte':agent_connecte,'id_agent_connecte':id_agent_connecte}
     return render_template('agent_data.html',**params)
 
 @app.route("/update_data")
@@ -73,7 +86,14 @@ def update_data():
     listeAgents=bdd.get_data()
     listeMAC=bdd.get_actionsMAC_data()
     listeMaint=bdd.get_dataMAINT()
-    params={'listeAgents':listeAgents,'listeMAC':listeMAC,'listeMaint':listeMaint}
+    if 'nom_agent' in session:
+        agent_connecte=session['nom_agent']+' '+session['prenom_agent']
+        id_agent_connecte=session['id_agents']
+    else:
+        agent_connecte=''
+        id_agent_connecte=None
+    
+    params={'listeAgents':listeAgents,'listeMAC':listeMAC,'listeMaint':listeMaint,'agent_connecte':agent_connecte,'id_agent_connecte':id_agent_connecte}
     params=f.messageInfo(params)
     return render_template('update_data.html',**params)
 
@@ -111,10 +131,31 @@ def add_formation_MAC():
 def form_add_agent():
     listeAgents=bdd.get_data()
     listeMAC=bdd.get_actionsMAC_data()
-    params={'listeAgents':listeAgents,'listeMAC':listeMAC}
+    if 'nom_agent' in session:
+        agent_connecte=session['nom_agent']+' '+session['prenom_agent']
+        id_agent_connecte=session['id_agents']
+    else:
+        agent_connecte=''
+        id_agent_connecte=None
+    params={'listeAgents':listeAgents,'listeMAC':listeMAC,'agent_connecte':agent_connecte,'id_agent_connecte':id_agent_connecte}
     params=f.messageInfo(params)
     
-    return render_template('login.html', **params)
+    return render_template('add_agent.html', **params)
+
+@app.route("/form_add_action")
+def form_add_action():
+    listeAgents=bdd.get_data()
+    listeMAC=bdd.get_actionsMAC_data()
+    if 'nom_agent' in session:
+        agent_connecte=session['nom_agent']+' '+session['prenom_agent']
+        id_agent_connecte=session['id_agents']
+    else:
+        agent_connecte=' '
+        id_agent_connecte=None
+    params={'listeAgents':listeAgents,'listeMAC':listeMAC,'agent_connecte':agent_connecte,'id_agent_connecte':id_agent_connecte}
+    params=f.messageInfo(params)
+    
+    return render_template('add_action.html', **params)
 
 @app.route('/add_agent',methods=['POST'])
 def ajoutagent():
@@ -200,8 +241,23 @@ def update_password():
     new_pwd=hashlib.sha256(new_pwd.encode())
     new_pwd=new_pwd.hexdigest()
     bdd.updateAuthData(new_pwd,id_agents)
+    session['infoBleu']='Votre mot de passe a bien été modifié'
     return redirect('/')
 
+@app.route('/form_update_password')
+def form_update_password():
+    listeAgents=bdd.get_data()
+    listeMAC=bdd.get_actionsMAC_data()
+    if 'nom_agent' in session:
+        agent_connecte=session['nom_agent']+' '+session['prenom_agent']
+        id_agent_connecte=session['id_agents']
+    else:
+        agent_connecte=' '
+        id_agent_connecte=None
+
+    params={'listeAgents':listeAgents,'listeMAC':listeMAC,'agent_connecte':agent_connecte,'id_agent_connecte':id_agent_connecte}
+    params=f.messageInfo(params)
+    return render_template('update_pwd.html',**params)
 
 @app.route("/connecter", methods=["POST"])
 def connecter():
@@ -225,22 +281,11 @@ def connecter():
         session["infoRouge"] = "Authentification refusée"
         return redirect("/")
     
-@app.route('/json_data_pdf')
-def json_data_pdf():
-    data={
-        'nom_titulaire':session.get['nom_agent'],
-        'prenom_titulaire':session.get['prenom_agent'],
-        'ddn_titulaire':session.get['date_naissance_agent']
-        
-    }
-    print(data)
-    return jsonify(data)
-    
 @app.route("/logout")
 def logout():
     session.clear() # suppression de la session
-    #f.messageInfo({})
-    session["infoBleu"] = "Vous êtes déconnecté. Merci de votre visite"
+    session["infoBleu"] = "Vous êtes bien déconnecté"
+    
     return redirect("/")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -251,7 +296,7 @@ def generate_pdf():
     field_values={
         'nom_titulaire':session['nom_agent'],
         'prenom_titulaire':session['prenom_agent'],
-        'ddn_titulaire':session['date_naissance_agent']
+        'ddn_titulaire':f.format_date(session['date_naissance_agent'])
     }
     fillpdfs.write_fillable_pdf(template_pdf,filled_pdf,field_values)
     

@@ -45,29 +45,16 @@
     
     
     
-    <script type="text/javascript">
+    <script type="text/javascript"> //On utilise une fonction Javascript pour extraire les données du tableau HTML qui liste les formations effectuées par l'agent concerné
         function generate_livret() {
-        var doc = new jsPDF();
-        var htmlstring='';
-        var tempVarToCheckPageHeight=0;
-        var pageHeight=0;
-        pageHeight=doc.internal.pageSize.height;
-        specialElementHandlers = {  
-            // element with id of "bypass" - jQuery style selector  
-            '#bypassme': function(element, renderer) {  
-                // true = "handled elsewhere, bypass text extraction"  
-                return true  
-            }  
-        };  
-        var y = 10;
-        doc.text(10, y = y + 50, "Livret de formation et de suivi");
-        doc.addPage();  
-        doc.autoTable({  
-            html: '#liste_formations',  
-            startY: 55,  
+        var doc = new jsPDF(); //On déclare la variable 'doc', qui appelle la librairie jsPDF
+         
+        doc.autoTable({  //La librairie jsPDF appellée au-dessus génère un tableau automatiquement
+            html: '#liste_formations',  //Les données du tableau qui sera dans le PDF sont issues du tableau HTML ayant l'identifiant 'liste_formations'
+            startY: 25,  //Le tableau sera inséré à partir de 25 pixels depuis le haut du PDF
             theme: 'grid',  
             
         })  
-        doc.save('livret_formation_suivi.pdf');
+        doc.save('livret_formation_suivi.pdf'); //Le PDF est enregistré et aura le nom indiqué
         }
       </script>

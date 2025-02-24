@@ -1,21 +1,27 @@
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-    <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
         <div class="sidebar-brand-icon">
             <img src="/static/img/logo_enac2.png" height="50" width="55">
         </div>
         <div class="sidebar-brand-text mx-3">Proc'ENAC</div>
     </a>
-
-    <!-- Divider -->
     <hr class="sidebar-divider">
     
     {% if session['id_agents']%}
     <li class="nav-item">
-    <a class="nav-link" href="/logout">Se déconnecter</a>
+    <div class="text-white-50 nav-link">Connecté en tant que <b class="text-white">{{agent_connecte}}</b></div>
+    <li class="nav-item">
+        <a class="nav-link" href="/form_add_action">
+            <i class="fas fa-fw fa-check"></i>
+            <span>Ajouter une tâche</span></a>
+            <a class="nav-link" href="/logout"><i class="fas fa-arrow-right"></i><span>Se déconnecter</span></a>
+    <a class="nav-link" href="/form_update_password"><i class="fas fa-arrow-right"></i><span>Changer de mot de passe</span></a>
+    <a class="nav-link" href="/detail_agent/{{id_agent_connecte}}"><i class="fas fa-arrow-right"></i><span>Détail de mes formations</span></a>
     </li>
+    
+    
     {%else%}
     <!-- Formulaire d'authentification -->
     <div class="sidebar-heading">
@@ -46,19 +52,17 @@
     {%endif%}
     <p></p>
     <hr class="sidebar-divider">
-    <!-- Heading -->
+
+    {%if 'Administrateur' in session['statut_admin_agent']%}
     <div class="sidebar-heading">
         Gestion des agents
     </div>
-
-    <!-- Nav Item - Charts -->
-    <li class="nav-item">
-        <a class="nav-link" href="/form_add_agent">
-            <i class="fas fa-fw fa-solid fa-user"></i>
-            <span>Ajouter un agent</span></a>
-    </li>
-
-    <!-- Nav Item - Tables -->
+        <!-- Nav Item - Charts -->
+        <li class="nav-item">
+            <a class="nav-link" href="/form_add_agent">
+                <i class="fas fa-fw fa-solid fa-user"></i>
+                <span>Ajouter un agent</span></a>
+        </li>
     <li class="nav-item">
         <a class="nav-link" href="/form_add_agent">
             <i class="fas fa-fw fa-check"></i>
@@ -66,22 +70,13 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="/form_add_agent">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>Consulter le dossier personnel d'un agent</span></a>
-    </li>
-
-    <li class="nav-item">
         <a class="nav-link" href="/update_data">
             <i class="fas fa-pen"></i>
             <span>Modifier les données d'un agent</span></a>
     </li>
-
+    {%endif%}
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
-
-    
-
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
