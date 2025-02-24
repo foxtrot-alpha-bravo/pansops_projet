@@ -179,6 +179,7 @@ def ajoutagent():
 
 
 
+
 @app.route('/check_date',methods=['POST'])
 def checkdate(): 
     session['datesouhaite']=1  
@@ -289,18 +290,21 @@ def logout():
     return redirect("/")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-@app.route('/generate_pdf',methods=['GET'])
+@app.route('/generate_pdf',methods=['GET']) #La fonction permet de générer un fichier PDF en remplissant un modèle existant, avec les informations qu'on lui donnera
 def generate_pdf():
-    template_pdf = os.path.join(BASE_DIR, "static", "livret_pansops_intro.pdf")
-    filled_pdf = os.path.join(BASE_DIR, "static", "filled_pdf.pdf")
-    field_values={
+    template_pdf = os.path.join(BASE_DIR, "static", "livret_pansops_intro.pdf") #On déclare cette variable pour indiquer le chemin vers le modèle de PDF à utiliser
+    filled_pdf = os.path.join(BASE_DIR, "static", "filled_pdf.pdf") #On déclare le chemin où sera enregistré le PDF rempli
+    
+    
+    field_values={ #On crée un dictionnaire contenant les valeurs à insérer dans le PDF
         'nom_titulaire':session['nom_agent'],
         'prenom_titulaire':session['prenom_agent'],
         'ddn_titulaire':f.format_date(session['date_naissance_agent'])
     }
-    fillpdfs.write_fillable_pdf(template_pdf,filled_pdf,field_values)
     
-    return send_file(filled_pdf, as_attachment=True)
+    fillpdfs.write_fillable_pdf(template_pdf,filled_pdf,field_values) #Le PDF est rempli par cette fonction
+    
+    return send_file(filled_pdf, as_attachment=True) #Le fichier créé est envoyé au client pour être téléchargé
 
 
 @app.route('/debug_path', methods=['GET'])
