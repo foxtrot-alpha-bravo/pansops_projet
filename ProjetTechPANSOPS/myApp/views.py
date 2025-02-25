@@ -13,9 +13,31 @@ app.template_folder='template'
 app.static_folder='static'
 app.config.from_object('myApp.config')
 
-
 @app.route("/")
 def index():
+    listeAgents=bdd.get_data()
+    listeMAC=bdd.get_actionsMAC_data()
+    listeMaint=bdd.get_dataMAINT()
+    if 'nom_agent' in session:
+        agent_connecte=session['nom_agent']+' '+session['prenom_agent']
+        id_agent_connecte=session['id_agents']
+    else:
+        agent_connecte=''
+        id_agent_connecte=None
+    session['datesouhaite']=0
+    f.calcul_FC(listeAgents)
+    f.calcul_MAC(listeAgents,listeMaint)
+    params={'listeAgents':listeAgents,
+            'listeMAC':listeMAC,
+            'listeMaint':listeMaint,
+            'agent_connecte':agent_connecte,
+            'id_agent_connecte':id_agent_connecte}
+    params=f.messageInfo(params)
+         
+    return render_template('index2.html',**params)
+
+@app.route("/backup")
+def index_backup():
     listeAgents=bdd.get_data()
     listeMAC=bdd.get_actionsMAC_data()
     listeMaint=bdd.get_dataMAINT()
