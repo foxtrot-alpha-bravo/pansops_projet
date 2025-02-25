@@ -136,8 +136,8 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Détail des formations de l'agent {%for i in name_agent%} {{i.nom_agent}} {{ i.prenom_agent }} {%endfor%}</h6>
-                            <a href="/generate_pdf">Livret partie 1</a>
-                            <a href="#" onclick="generate_livret(); return false;">Livret Partie 2</a>
+                            <button><a href="/generate_pdf">Livret partie 1</a></button>
+                            <button><a href="#" onclick="generate_livret(); return false;">Livret Partie 2</a></button>
                             
                         </div>
                         <div class="card-body">
