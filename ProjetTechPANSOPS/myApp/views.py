@@ -12,7 +12,7 @@ app=Flask(__name__)
 app.template_folder='template'
 app.static_folder='static'
 app.config.from_object('myApp.config')
-
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 @app.route("/")
 def index():
     listeAgents=bdd.get_data()
@@ -199,9 +199,39 @@ def ajoutagent():
         session["infoRouge"] = "Problème ajout membre"
     return redirect('/')
 
+@app.route('/form_admin_reset_password')
+def form_admin_reset_password():
+    listeAgents=bdd.get_data()
+    listeMAC=bdd.get_actionsMAC_data()
+    if 'nom_agent' in session:
+        agent_connecte=session['nom_agent']+' '+session['prenom_agent']
+        id_agent_connecte=session['id_agents']
+    else:
+        agent_connecte=' '
+        id_agent_connecte=None
 
+    params={'listeAgents':listeAgents,'listeMAC':listeMAC,'agent_connecte':agent_connecte,'id_agent_connecte':id_agent_connecte}
+    params=f.messageInfo(params)
+    return render_template('reset_pwd.html',**params)
 
-
+@app.route('/admin_reset_password',methods=['POST'])
+def admin_reset_password():
+    if session['statut_admin_agent']=='Administrateur':
+        id_agent=request.form['id_agent']
+        s="abcdefghijklmnopqrstuvwxyz01234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()?"
+        mdp = "".join(random.sample( s , 6 )) #6 = longueur du mot de passe
+        mdpClair=mdp
+        mdp=hashlib.sha256(mdp.encode())
+        mdpC=mdp.hexdigest()
+        bdd.updateAuthData(mdpC,id_agent)
+        if "errorDB" not in session:
+            session["infoVert"] = "Mot de passe réinitialisé. Le nouveau mot de passe est " + mdpClair
+        else:
+            session["infoRouge"] = "Problème réinitialisation"
+        return redirect('/')
+    else:
+        return redirect('/')
+    
 @app.route('/check_date',methods=['POST'])
 def checkdate(): 
     session['datesouhaite']=1  
@@ -311,7 +341,7 @@ def logout():
     
     return redirect("/")
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 @app.route('/generate_pdf',methods=['GET']) #La fonction permet de générer un fichier PDF en remplissant un modèle existant, avec les informations qu'on lui donnera
 def generate_pdf():
     template_pdf = os.path.join(BASE_DIR, "static", "livret_pansops_intro.pdf") #On déclare cette variable pour indiquer le chemin vers le modèle de PDF à utiliser
