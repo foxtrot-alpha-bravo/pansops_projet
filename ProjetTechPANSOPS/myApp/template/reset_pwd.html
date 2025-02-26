@@ -42,26 +42,25 @@
                                     <div class="embed-responsive col-xl-12">
                                         <div class="p-5">
                                             <div class="text-center">
-                                                <h1 class="h4 text-gray-900 mb-4">Changer de mot de passe</h1>
+                                                <h1 class="h4 text-gray-900 mb-4">Réinitialiser un mot de passe</h1>
                                             </div>
-                                            <form class="user" method="POST" action="/update_password">
+                                            <form class="user" method="POST" action="/admin_reset_password" onsubmit="return confirm_reset()">
                                                 <div class="form_group">
-                                                    <input class="form-control" type="text"  name="tel_agent"
-                                                        placeholder="Numéro de téléphone">
+                                                    <select name="id_agent" class="form-control" required>
+                                                        <option value="" selected disabled>Choisissez un agent...
+                                                        </option>
+                                                        {%for agent in listeAgents%}
+                                                        <option value="{{agent.id_agents}}">{{agent.nom_agent}}
+                                                            {{agent.prenom_agent}}</option>
+                                                        {%endfor%}
+
+                                                    </select>
                                                     
-                                                </div>
-                                                <div class="form-group">
-                                                <input class="form-control" type="text" name="old_pwd"
-                                                        placeholder="Ancien mot de passe">
-                                                </div>
-                                                <div class="form-group">
-                                                    
-                                                    <input class="form-control" type="text" name="new_pwd" placeholder="Nouveau mot de passe">
                                                 </div>
 
                                                 <div class="text-center">
                                                     <button type="submit"
-                                                        class="btn btn-primary btn-user btn-block">Mettre à jour le mot de passe</button>
+                                                        class="btn btn-primary btn-user btn-block">Réinitialiser le mot de passe</button>
                                                     <button type="reset" class="btn">Réinitialiser</button>
                                                 </div>
                                             </form>
