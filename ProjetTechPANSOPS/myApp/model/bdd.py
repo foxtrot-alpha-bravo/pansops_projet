@@ -120,7 +120,8 @@ def get_actionsMAC_one_agent(idAgent):
     sql='''SELECT * FROM participation_agent 
     JOIN agents ON participation_agent.id_agent=agents.id_agents
     JOIN maintien_competences on maintien_competences.id_maintien_competences=participation_agent.id_maintien_competences
-    WHERE id_agent=%s'''
+    WHERE id_agent=%s
+    ORDER BY participation_agent.date_participation_agent ASC'''
     param=(idAgent,)
     msg={
         "success":"OKdetail_agent",
