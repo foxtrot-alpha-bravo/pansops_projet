@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
 
@@ -24,7 +24,6 @@
 </head>
 
 <body id="page-top">
-    <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>  
@@ -70,6 +69,7 @@
                             <h6 class="m-0 font-weight-bold text-primary">Détail des formations de l'agent {%for i in name_agent%} {{i.nom_agent}} {{ i.prenom_agent }} {%endfor%}</h6>
                             <button><a href="/generate_pdf">Livret partie 1</a></button>
                             <button><a href="#" onclick="generate_livret(); return false;">Livret Partie 2</a></button>
+                            <button onclick="createPdf()">Télécharger</button>
                             
                         </div>
                         <div class="card-body">
