@@ -199,6 +199,7 @@ def ajoutagent():
         session["infoRouge"] = "Problème ajout membre"
     return redirect('/')
 
+
 @app.route('/form_admin_reset_password')
 def form_admin_reset_password():
     listeAgents=bdd.get_data()
@@ -358,6 +359,38 @@ def generate_pdf():
     
     return send_file(filled_pdf, as_attachment=True) #Le fichier créé est envoyé au client pour être téléchargé
 
+@app.route('/admin_generate_pdf',methods=['GET']) #La fonction permet de générer un fichier PDF en remplissant un modèle existant, avec les informations qu'on lui donnera
+def admin_generate_pdf():
+    template_pdf = os.path.join(BASE_DIR, "static", "livret_pansops_intro.pdf") #On déclare cette variable pour indiquer le chemin vers le modèle de PDF à utiliser
+    filled_pdf = os.path.join(BASE_DIR, "static", "filled_pdf.pdf") #On déclare le chemin où sera enregistré le PDF rempli
+    idAgent = request.args.get('idAgent')
+    agent=bdd.get_name_one_agent(int(idAgent))
+    agent=agent[0]
+    
+    field_values={ #On crée un dictionnaire contenant les valeurs à insérer dans le PDF
+        'nom_titulaire':agent['nom_agent'],
+        'prenom_titulaire':agent['prenom_agent'],
+        'ddn_titulaire':datetime.strftime(agent['date_naissance_agent'],'%d/%m/%Y')
+    }
+    
+    fillpdfs.write_fillable_pdf(template_pdf,filled_pdf,field_values) #Le PDF est rempli par cette fonction
+    
+    return send_file(filled_pdf, as_attachment=True) #Le fichier créé est envoyé au client pour être téléchargé
+
+@app.route('/form_admin_generate_pdf')
+def form_admin_generate_pdf():
+    listeAgents=bdd.get_data()
+    listeMAC=bdd.get_actionsMAC_data()
+    if 'nom_agent' in session:
+        agent_connecte=session['nom_agent']+' '+session['prenom_agent']
+        id_agent_connecte=session['id_agents']
+    else:
+        agent_connecte=' '
+        id_agent_connecte=None
+
+    params={'listeAgents':listeAgents,'listeMAC':listeMAC,'agent_connecte':agent_connecte,'id_agent_connecte':id_agent_connecte}
+    params=f.messageInfo(params)
+    return render_template('admin_pdf.html',**params)
 
 @app.route('/debug_path', methods=['GET'])
 def debug_path():
