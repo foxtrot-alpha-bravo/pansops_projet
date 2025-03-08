@@ -8,12 +8,12 @@
     <!-- Custom scripts for all pages-->
     <script src="/static/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
+    <!-- Page level plugins 
     <script src="/static/vendor/chart.js/Chart.min.js"></script>
 
-    <!-- Page level custom scripts -->
+     Page level custom scripts 
     <script src="/static/js/demo/chart-area-demo.js"></script>
-    <script src="/static/js/demo/chart-pie-demo.js"></script>
+    <script src="/static/js/demo/chart-pie-demo.js"></script>-->
 
 
 <script src="https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.29.0/tableExport.min.js"></script>
@@ -59,7 +59,25 @@
     </script>
 
     <script>
-        function confirm_reset() {
-            return confirm("Êtes-vous sûr de vouloir réinitialiser le mot de passe de cet agent ?");
+        function confirm_action() {
+            return confirm("Êtes-vous sûr de vouloir effectuer cette action ?");
         }
     </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector(".gen_pdf"); // Sélectionne le formulaire
+    
+            form.addEventListener("submit", function () {
+                const selectedAgent = form.querySelector("select[name='idAgent']").value;
+    
+                if (selectedAgent) {
+                    // Redirection après 3 secondes
+                    setTimeout(function () {
+                        window.location.href = "/detail_agent/" + selectedAgent;
+                    }, 3000);
+                }
+            });
+        });
+    </script>
+    
