@@ -291,3 +291,21 @@ def delete_action(idAction):
     }
     bddGen.deleteData(cnx,sql,param,msg)
     cnx.close() 
+    
+def get_action_by_id(idAction):
+    cnx = bddGen.connexion()
+    if cnx is None:
+        return None
+    
+    sql = "SELECT id_agent FROM participation_agent WHERE id_participation_agent = %s"
+    param = (idAction,)
+    msg = {
+        "success": "OK get action",
+        "error": "Failed to get action"
+    }
+    
+    action = bddGen.selectData(cnx, sql, param, msg)
+    cnx.close()
+    
+    return action[0] if action else None  # Retourne l'ID de l'agent ou None
+
