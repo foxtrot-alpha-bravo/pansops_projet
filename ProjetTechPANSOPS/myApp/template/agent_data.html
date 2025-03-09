@@ -69,7 +69,6 @@
                             <h6 class="m-0 font-weight-bold text-primary">Détail des formations de l'agent {%for i in name_agent%} {{i.nom_agent}} {{ i.prenom_agent }} {%endfor%}</h6>
                             <button><a href="/generate_pdf">Livret partie 1</a></button>
                             <button><a href="#" onclick="generate_livret(); return false;">Livret Partie 2</a></button>
-                            <button onclick="createPdf()">Télécharger</button>
                             
                         </div>
                         <div class="card-body">
@@ -77,11 +76,12 @@
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="liste_formations" data-search='true' width="100%" cellspacing="0" data-show-export="true">
                                     <thead>
-                                        <th>Supprimer</th>
+                                        
                                         <th>Intitulé de la formation</th>
                                         <th>Début</th>
                                         <th>Fin</th>
                                         <th>Commentaires</th>
+                                        <th>Supprimer</th>
                                     </thead>
                                     <tbody>
                                         {%for formation in detail_agent%}
