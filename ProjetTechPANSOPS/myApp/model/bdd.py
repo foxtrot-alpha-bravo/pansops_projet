@@ -267,3 +267,27 @@ def updateAuthData(new_pwd, id_agents):
 # requête par fetchone
     bddGen.updateData(cnx, sql, param, msg)
     cnx.close()
+    
+def delete_agent(idAgent):
+    cnx=bddGen.connexion()
+    if cnx is None: return None
+    sql="DELETE FROM agents WHERE id_agents=%s"
+    param=(idAgent,)
+    msg = {
+        "success":"del_agent OK",
+        "error" : "Failed delete agent"
+    }
+    bddGen.deleteData(cnx,sql,param,msg)
+    cnx.close()
+
+def delete_action(idAction):
+    cnx=bddGen.connexion()
+    if cnx is None: return None
+    sql="DELETE FROM participation_agent WHERE id_participation_agent=%s"
+    param=(idAction,)
+    msg = {
+        "success":"del_action OK",
+        "error" : "Failed delete action data"
+    }
+    bddGen.deleteData(cnx,sql,param,msg)
+    cnx.close() 

@@ -375,7 +375,7 @@ def admin_generate_pdf():
     
     fillpdfs.write_fillable_pdf(template_pdf,filled_pdf,field_values) #Le PDF est rempli par cette fonction
     
-    return send_file(filled_pdf, as_attachment=True) #Le fichier créé est envoyé au client pour être téléchargé
+    return send_file(filled_pdf, as_attachment=True,mimetype='application/pdf',) #Le fichier créé est envoyé au client pour être téléchargé
 
 @app.route('/form_admin_generate_pdf')
 def form_admin_generate_pdf():
@@ -400,3 +400,21 @@ def debug_path():
         "Chemin absolu attendu": template_pdf,
         "Fichier trouvé": os.path.exists(template_pdf)
     }
+
+@app.route('/suppAgent/<idAgent>')
+def suppAgent(idAgent=''):
+    bdd.delete_agent(idAgent)
+    if "errorDB" not in session:
+        session["infoVert"]="L'agent a bien été supprimé"
+    else:
+        session["infoRouge"] = "Problème suppression agent"
+    return redirect("/update_data")  
+
+@app.route('/suppAction/<idAction>')
+def suppAction(idAction=''):
+    bdd.delete_action(idAction)
+    if "errorDB" not in session:
+        session["infoVert"]="L'action a bien été supprimée"
+    else:
+        session["infoRouge"] = "Problème suppression action"
+    return redirect("/")  
