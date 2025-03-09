@@ -47,9 +47,9 @@ def getAll_data():
         "error" : "Failed get agents data"
 }
     listeAgents=bddGen.selectData(cnx,sql,param,msg)
-    
+     
     cnx.close()
-    
+
     return listeAgents
 
 def get_dataMAINT():
