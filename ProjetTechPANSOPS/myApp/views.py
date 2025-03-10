@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, session, request,send_file
+from flask import Flask, render_template, redirect, session, request,send_file, url_for
 from myApp.model import bdd
 from myApp.controller import function as f
 import random,hashlib,datetime,locale
@@ -93,6 +93,7 @@ def index_backup():
 @app.route('/detail_agent/<id_agents>')
 def detailAgent(id_agents=''):
     detail_agent=bdd.get_actionsMAC_one_agent(id_agents)
+    print(detail_agent)
     name_agent=bdd.get_name_one_agent(id_agents)
     id_agent_connecte=session['id_agents']
     if 'nom_agent' in session:
@@ -101,6 +102,7 @@ def detailAgent(id_agents=''):
         agent_connecte=""
         id_agent_connecte=None
     params={'detail_agent':detail_agent,'name_agent':name_agent,'agent_connecte':agent_connecte,'id_agent_connecte':id_agent_connecte}
+    params=f.messageInfo(params)
     return render_template('agent_data.html',**params)
 
 @app.route("/update_data")
@@ -412,9 +414,13 @@ def suppAgent(idAgent=''):
 
 @app.route('/suppAction/<idAction>')
 def suppAction(idAction=''):
+    id_agent=bdd.get_action_by_id(idAction)
+    id_agent_=id_agent['id_agent']
+    print(id_agent)
     bdd.delete_action(idAction)
+    
     if "errorDB" not in session:
         session["infoVert"]="L'action a bien été supprimée"
     else:
         session["infoRouge"] = "Problème suppression action"
-    return redirect("/")  
+    return redirect(url_for('detailAgent',id_agents=id_agent_))

@@ -44,20 +44,58 @@
     
     
     
-    <script type="text/javascript"> //On utilise une fonction Javascript pour extraire les données du tableau HTML qui liste les formations effectuées par l'agent concerné
+ <!--   <script type="text/javascript"> //On utilise une fonction Javascript pour extraire les données du tableau HTML qui liste les formations effectuées par l'agent concerné
         function generate_livret() {
         var doc = new jsPDF(); //On déclare la variable 'doc', qui appelle la librairie jsPDF
          
         doc.autoTable({  //La librairie jsPDF appellée au-dessus génère un tableau automatiquement
             html: '#liste_formations',  //Les données du tableau qui sera dans le PDF sont issues du tableau HTML ayant l'identifiant 'liste_formations'
             startY: 25,  //Le tableau sera inséré à partir de 25 pixels depuis le haut du PDF
-            theme: 'grid',  
+            theme: 'grid', 
+            columnStyles: {
+                4: { cellWidth: 0, minCellWidth: 0, fontSize: 0 } // Masque la colonne "Supprimer"
+            }
             
         })  
         doc.save('livret_formation_suivi.pdf'); //Le PDF est enregistré et aura le nom indiqué
         }
     </script>
+-->
 
+<script type="text/javascript">
+    function generate_livret() {
+        var doc = new jsPDF();
+        var table = document.getElementById("liste_formations");
+    
+        var headers = [];
+        var data = [];
+    
+        // Sélectionner les titres des colonnes sauf la dernière (Supprimer)
+        table.querySelectorAll("thead th:not(:last-child)").forEach(th => {
+            headers.push(th.textContent.trim());
+        });
+    
+        // Récupérer les lignes du tableau
+        table.querySelectorAll("tbody tr").forEach(tr => {
+            let rowData = [];
+            tr.querySelectorAll("td:not(:last-child)").forEach(td => {
+                rowData.push(td.textContent.trim());
+            });
+            data.push(rowData);
+        });
+    
+        // Générer le PDF sans la colonne "Supprimer"
+        doc.autoTable({
+            head: [headers],  // En-tête sans "Supprimer"
+            body: data,       // Contenu sans "Supprimer"
+            startY: 25,
+            theme: 'grid'
+        });
+    
+        doc.save('livret_formation_suivi.pdf');
+    }
+    </script>
+    
     <script>
         function confirm_action() {
             return confirm("Êtes-vous sûr de vouloir effectuer cette action ?");
