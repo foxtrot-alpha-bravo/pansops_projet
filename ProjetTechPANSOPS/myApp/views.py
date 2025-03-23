@@ -244,13 +244,13 @@ def checkdate():
     listeMaint=bdd.get_datacheck(date_formcheck)   #récupère les trois dernières actions de maintien de compétences avent la date du formulaire(voir requête sql via  fichier bdd fonction:get_datacheck(date_formcheck)
     listeAgents=bdd.get_datacheckFC(date_formcheck) 
     listeMAC=bdd.get_actionsMAC_data()
-    
+    date_ajour=datetime.strptime(session['newdate'], "%Y-%m-%d").date()
     
     for k in range(len(listeAgents)): #La fonction sera exécutée pour chaque agent 
         if listeAgents[k]["derniere_formation"]=='None' : #Si l'agent n'a aucune formation enregistrée
                 listeAgents[k]['couleur'] = 'red' #La couleur revenant dans le dictionnaire est rouge, et sera affichée en conséquence
         else :
-            date_ajour=datetime.strptime(session['newdate'], "%Y-%m-%d").date() #La variable est initialisée avec la date du formulaire
+            # date_ajour=datetime.strptime(session['newdate'], "%Y-%m-%d").date() #La variable est initialisée avec la date du formulaire
             date_form = datetime.strptime(listeAgents[k]["derniere_formation"], "%Y-%m-%d").date() #La date présente dans le dictionnaire est appellée par cette variable
             jours_ecart = (date_form - date_ajour).days #On recherche le nombre de jours entre la date de la dernière formation et la date du jour en faisant une soustraction entre les deux dates
             listeAgents[k]['jours_ecart'] = jours_ecart #La variable jours_ecart correspondant aux nombres de jours est incluse au dictionnaire
@@ -270,7 +270,7 @@ def checkdate():
             listeMaint[i]['couleurM'] = 'red'
         else : 
             date_maint = datetime.strptime(listeMaint[i]["derniere_formation_3"], "%Y-%m-%d").date()
-            date_ajour=datetime.strptime(session['newdate'], "%Y-%m-%d").date()
+            # date_ajour=datetime.strptime(session['newdate'], "%Y-%m-%d").date()
             ecart_maint = (date_maint - date_ajour).days
             listeAgents[i]["jours_ecartM"]=ecart_maint
             if ecart_maint >= 365 :
@@ -282,7 +282,7 @@ def checkdate():
             else :
                 listeMaint[i]['couleurM'] = 'rouge'
         listeAgents[i]['couleurM'] = listeMaint[i]['couleurM']
-        
+        print(date_ajour)
         params={'listeAgents':listeAgents,'listeMAC':listeMAC,'listeMaint':listeMaint,'date_ajour':date_ajour}
         params=f.messageInfo(params)
     return render_template('index2.html',**params)
