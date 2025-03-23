@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 14 jan. 2025 à 12:23
+-- Généré le : dim. 23 mars 2025 à 22:46
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -29,22 +29,24 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `agents` (
   `id_agents` int(11) NOT NULL,
+  `statut_agent` enum('Actif','Inactif') NOT NULL DEFAULT 'Actif',
   `nom_agent` text NOT NULL,
   `prenom_agent` text NOT NULL,
   `date_naissance_agent` date NOT NULL,
   `tel_agent` text NOT NULL,
-  `fin_formation_theorique_agent` date NOT NULL
+  `fin_formation_theorique_agent` date NOT NULL,
+  `debut_activite_enac` date DEFAULT NULL,
+  `fin_activite_enac` date DEFAULT NULL,
+  `motPasse` text NOT NULL,
+  `statut_admin_agent` enum('Administrateur','Agent') DEFAULT 'Agent'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `agents`
 --
 
-INSERT INTO `agents` (`id_agents`, `nom_agent`, `prenom_agent`, `date_naissance_agent`, `tel_agent`, `fin_formation_theorique_agent`) VALUES
-(2, 'Mensoif', 'Gérard', '1999-11-25', '066482233', '2024-11-03'),
-(4, 'Dupont', 'Martin', '2006-11-02', '0123456789', '2024-11-06'),
-(5, 'Labrosse', 'Adam', '2004-11-10', '0244489238', '2024-11-13'),
-(6, 'Strueux', 'Simon', '2005-11-09', '093454534', '2024-11-01');
+INSERT INTO `agents` (`id_agents`, `statut_agent`, `nom_agent`, `prenom_agent`, `date_naissance_agent`, `tel_agent`, `fin_formation_theorique_agent`, `debut_activite_enac`, `fin_activite_enac`, `motPasse`, `statut_admin_agent`) VALUES
+(18, 'Actif', 'agent', 'agent', '2000-01-01', '123456789', '2020-01-01', '2023-01-01', NULL, 'd4f0bc5a29de06b510f9aa428f1eedba926012b591fef7a518e776a7c9bd1824', 'Administrateur');
 
 -- --------------------------------------------------------
 
@@ -79,18 +81,10 @@ CREATE TABLE `participation_agent` (
   `id_participation_agent` int(11) NOT NULL,
   `id_agent` int(11) NOT NULL,
   `id_maintien_competences` int(11) NOT NULL,
-  `date_participation_agent` date NOT NULL
+  `date_participation_agent` date NOT NULL,
+  `date_debut_formation` date DEFAULT NULL,
+  `commentaires` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Déchargement des données de la table `participation_agent`
---
-
-INSERT INTO `participation_agent` (`id_participation_agent`, `id_agent`, `id_maintien_competences`, `date_participation_agent`) VALUES
-(2, 2, 4, '2024-11-12'),
-(9, 2, 1, '2025-01-02'),
-(10, 2, 1, '2025-01-01'),
-(11, 2, 5, '2025-01-14');
 
 --
 -- Index pour les tables déchargées
@@ -124,7 +118,7 @@ ALTER TABLE `participation_agent`
 -- AUTO_INCREMENT pour la table `agents`
 --
 ALTER TABLE `agents`
-  MODIFY `id_agents` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_agents` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT pour la table `maintien_competences`
@@ -136,7 +130,7 @@ ALTER TABLE `maintien_competences`
 -- AUTO_INCREMENT pour la table `participation_agent`
 --
 ALTER TABLE `participation_agent`
-  MODIFY `id_participation_agent` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_participation_agent` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- Contraintes pour les tables déchargées

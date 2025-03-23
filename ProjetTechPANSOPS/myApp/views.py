@@ -329,6 +329,8 @@ def connecter():
         session["prenom_agent"] = user["prenom_agent"]
         session['date_naissance_agent']=user["date_naissance_agent"]
         session["statut_admin_agent"] = user["statut_admin_agent"]
+        session["debut_activite_enac"]=user['debut_activite_enac']
+        session['tel_agent']=user['tel_agent']
         session["infoVert"] = "Authentification réussie"
         print(session)
         return redirect('/')
@@ -354,7 +356,11 @@ def generate_pdf():
     field_values={ #On crée un dictionnaire contenant les valeurs à insérer dans le PDF
         'nom_titulaire':session['nom_agent'],
         'prenom_titulaire':session['prenom_agent'],
-        'ddn_titulaire':f.format_date(session['date_naissance_agent'])
+        'ddn_titulaire':f.format_date(session['date_naissance_agent']),
+        'date_entree_enac_titulaire':f.format_date(session['debut_activite_enac']),
+        'date_now':datetime.now().strftime('%d/%m/%Y'),
+        'tel_titulaire':session['tel_agent']
+        
     }
     
     fillpdfs.write_fillable_pdf(template_pdf,filled_pdf,field_values) #Le PDF est rempli par cette fonction
@@ -372,7 +378,11 @@ def admin_generate_pdf():
     field_values={ #On crée un dictionnaire contenant les valeurs à insérer dans le PDF
         'nom_titulaire':agent['nom_agent'],
         'prenom_titulaire':agent['prenom_agent'],
-        'ddn_titulaire':datetime.strftime(agent['date_naissance_agent'],'%d/%m/%Y')
+        'ddn_titulaire':f.format_date(agent['date_naissance_agent']),
+        'tel_titulaire':agent['tel_agent'],
+        'date_now':datetime.now().strftime('%d/%m/%Y'),
+        'date_entree_enac_titulaire':f.format_date(agent['debut_activite_enac']),
+
     }
     
     fillpdfs.write_fillable_pdf(template_pdf,filled_pdf,field_values) #Le PDF est rempli par cette fonction

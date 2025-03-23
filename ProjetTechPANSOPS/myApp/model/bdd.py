@@ -200,7 +200,7 @@ ON agents.id_agents = latest_training.id_agent;'''
 def get_name_one_agent(idAgent):
     cnx=bddGen.connexion()
     if cnx is None: return None
-    sql='''SELECT nom_agent, prenom_agent, date_naissance_agent from agents where id_agents=%s'''
+    sql='''SELECT * from agents where id_agents=%s'''
     param=(idAgent,)
     msg={
         "success":"OKname_agent",
